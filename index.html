@@ -33,11 +33,11 @@
       <!-- Mobile Quick Top Action Buttons -->
       <div class="mobile-top-actions">
         <button type="button" class="btn-top-pill" id="top-btn-new-form" title="Start New Verification">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          <span>New Form</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>+ New</span>
         </button>
         <button type="button" class="btn-top-pill" id="top-btn-records" title="View Saved Records">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
           <span>Records (<span id="top-record-count-badge">0</span>)</span>
         </button>
       </div>
@@ -253,45 +253,50 @@
           </div>
         </div>
 
-        <div class="questions-grid">
+        <div class="questions-list">
           <!-- Question 1 -->
-          <div class="form-group span-2">
-            <label class="question-label" for="q1_full_name">
-              <span class="q-num">Question 1:</span> What is your full name? <span class="required">*</span>
-            </label>
+          <div class="question-block" id="block-q1">
+            <div class="q-header">
+              <span class="q-num">Question 1:</span>
+              <span class="q-text">What is your full name? <span class="required">*</span></span>
+            </div>
             <input type="text" id="q1_full_name" name="q1_full_name" class="form-control" placeholder="Enter complete full name as per official records" required>
             <div class="field-hint">Ensure name matches official ID proof and agreement document.</div>
           </div>
 
           <!-- Question 2 -->
-          <div class="form-group">
-            <label class="question-label" for="q2_member_id">
-              <span class="q-num">Question 2:</span> What is your Member ID or Registration Number? <span class="required">*</span>
-            </label>
+          <div class="question-block" id="block-q2">
+            <div class="q-header">
+              <span class="q-num">Question 2:</span>
+              <span class="q-text">What is your Member ID or Registration Number? <span class="required">*</span></span>
+            </div>
             <input type="text" id="q2_member_id" name="q2_member_id" class="form-control mono" placeholder="e.g. AG-MEM-88214" required>
           </div>
 
           <!-- Question 3 -->
-          <div class="form-group">
-            <label class="question-label" for="q3_project_name">
-              <span class="q-num">Question 3:</span> What is the official name of the project? <span class="required">*</span>
-            </label>
+          <div class="question-block" id="block-q3">
+            <div class="q-header">
+              <span class="q-num">Question 3:</span>
+              <span class="q-text">What is the official name of the project? <span class="required">*</span></span>
+            </div>
             <input type="text" id="q3_project_name" name="q3_project_name" class="form-control" placeholder="Enter official sanctioned project title" required>
           </div>
 
           <!-- Question 4 -->
-          <div class="form-group">
-            <label class="question-label" for="q4_project_role">
-              <span class="q-num">Question 4:</span> What is your role in this project? <span class="required">*</span>
-            </label>
+          <div class="question-block" id="block-q4">
+            <div class="q-header">
+              <span class="q-num">Question 4:</span>
+              <span class="q-text">What is your role in this project? <span class="required">*</span></span>
+            </div>
             <input type="text" id="q4_project_role" name="q4_project_role" class="form-control" placeholder="e.g. Lead Beneficiary, Project Partner, Contractor, Member" required>
           </div>
 
           <!-- Question 5 -->
-          <div class="form-group">
-            <label class="question-label">
-              <span class="q-num">Question 5:</span> What is the total amount allocated to you according to your agreement? <span class="required">*</span>
-            </label>
+          <div class="question-block" id="block-q5">
+            <div class="q-header">
+              <span class="q-num">Question 5:</span>
+              <span class="q-text">What is the total amount allocated to you according to your agreement? <span class="required">*</span></span>
+            </div>
             <div class="amount-currency-group">
               <div class="currency-select-wrapper">
                 <select id="q5_currency" name="q5_currency" class="form-control currency-select">
@@ -473,24 +478,24 @@
         </div>
 
         <div class="questions-list">
-          <div class="grid-2-col">
-            <!-- Question 13 -->
-            <div class="form-group">
-              <label class="question-label" for="q13_mobile_number">
-                <span class="q-num">Question 13:</span> What is your registered mobile number? <span class="required">*</span>
-              </label>
-              <input type="tel" id="q13_mobile_number" name="q13_mobile_number" class="form-control" placeholder="+91 98765 43210" inputmode="tel" autocomplete="tel" required>
-              <div class="field-hint">Must match official registration records for SMS verification.</div>
+          <!-- Question 13 -->
+          <div class="question-block" id="block-q13">
+            <div class="q-header">
+              <span class="q-num">Question 13:</span>
+              <span class="q-text">What is your registered mobile number? <span class="required">*</span></span>
             </div>
+            <input type="tel" id="q13_mobile_number" name="q13_mobile_number" class="form-control" placeholder="+91 98765 43210" inputmode="tel" autocomplete="tel" required>
+            <div class="field-hint">Must match official registration records for SMS verification.</div>
+          </div>
 
-            <!-- Question 14 -->
-            <div class="form-group">
-              <label class="question-label" for="q14_agreement_date">
-                <span class="q-num">Question 14:</span> What is the date of your agreement? <span class="required">*</span>
-              </label>
-              <input type="date" id="q14_agreement_date" name="q14_agreement_date" class="form-control" required>
-              <div class="field-hint">Mention date as executed on the agreement deed.</div>
+          <!-- Question 14 -->
+          <div class="question-block" id="block-q14">
+            <div class="q-header">
+              <span class="q-num">Question 14:</span>
+              <span class="q-text">What is the date of your agreement? <span class="required">*</span></span>
             </div>
+            <input type="date" id="q14_agreement_date" name="q14_agreement_date" class="form-control" required>
+            <div class="field-hint">Mention date as executed on the agreement deed.</div>
           </div>
 
           <!-- Question 15 -->
@@ -788,10 +793,11 @@
           </div>
 
           <!-- Question 27 -->
-          <div class="form-group" style="margin-top: 1rem;">
-            <label class="question-label">
-              <span class="q-num">Question 27:</span> What is the officially approved amount mentioned in your agreement? <span class="required">*</span>
-            </label>
+          <div class="question-block" id="block-q27">
+            <div class="q-header">
+              <span class="q-num">Question 27:</span>
+              <span class="q-text">What is the officially approved amount mentioned in your agreement? <span class="required">*</span></span>
+            </div>
             <div class="amount-currency-group">
               <div class="currency-select-wrapper">
                 <select id="q27_currency" name="q27_currency" class="form-control currency-select">
@@ -870,11 +876,12 @@
           </div>
 
           <!-- Question 31 -->
-          <div class="form-group" style="margin-top: 1rem;">
-            <label class="question-label" for="q31_release_reference_no">
-              <span class="q-num">Question 31:</span> What is the official reference number of the fund allocation or release confirmation, if available?
-            </label>
-            <input type="text" id="q31_release_reference_no" name="q31_release_reference_no" class="form-control mono" placeholder="e.g. AG/ALLOC/2026/8942-B (Leave blank if not yet issued)">
+          <div class="question-block" id="block-q31">
+            <div class="q-header">
+              <span class="q-num">Question 31:</span>
+              <span class="q-text">What is the official reference number of the fund allocation or release confirmation, if available?</span>
+            </div>
+            <input type="text" id="q31_release_reference_no" name="q31_release_reference_no" class="form-control mono" placeholder="e.g. AG/ALLOC/2026/8942-B (Optional)">
           </div>
         </div>
       </section>
@@ -1092,7 +1099,7 @@
             Export JSON
           </button>
 
-          <button type="submit" class="btn btn-primary btn-submit-large" id="btn-submit-form">
+          <button type="submit" class="btn btn-primary btn-submit-large desktop-only-submit" id="btn-submit-form">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
               <polyline points="22 4 12 14.01 9 11.01"></polyline>

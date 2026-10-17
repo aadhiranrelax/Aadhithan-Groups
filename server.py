@@ -209,7 +209,7 @@ Aadhithan Groups Department of Compliance
 
 def save_submission_to_disk(submission):
     ensure_data_dirs()
-    ref_id = submission.get('refId', f"AG-VRF-{int(time.time())}")
+    ref_id = str(submission.get('refId') or submission.get('ref_id') or f"AG-VRF-{int(time.time())}").strip()
     safe_ref = "".join(c for c in ref_id if c.isalnum() or c in ('-', '_'))
 
     photo_rel_path = None
