@@ -271,7 +271,7 @@ def save_submission_to_disk(submission):
 
 
 def save_to_csv(rec):
-    file_exists = os.path.isfile(CSV_FILE)
+    ensure_data_dirs()
     sec1 = rec.get('section1', {})
     sec2 = rec.get('section2', {})
     sec3 = rec.get('section3', {})
@@ -332,13 +332,37 @@ def save_to_csv(rec):
     }
 
     fieldnames = list(row.keys())
+    existing_rows = []
+    if os.path.isfile(CSV_FILE):
+        try:
+            with open(CSV_FILE, 'r', newline='', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                for r in reader:
+                    existing_rows.append(r)
+        except Exception as e:
+            print(f"[CSV READ ERROR] {e}")
+
+    # Deduplicate: if Reference_ID matches, replace row in place
+    updated = False
+    ref_id = row['Reference_ID']
+    deduped_rows = []
+    for r in existing_rows:
+        if r.get('Reference_ID') == ref_id:
+            if not updated:
+                deduped_rows.append(row)
+                updated = True
+        else:
+            deduped_rows.append(r)
+
+    if not updated:
+        deduped_rows.append(row)
+
     try:
-        with open(CSV_FILE, 'a', newline='', encoding='utf-8') as f:
+        with open(CSV_FILE, 'w', newline='', encoding='utf-8') as f:
             writer = csv.DictWriter(f, fieldnames=fieldnames)
-            if not file_exists:
-                writer.writeheader()
-            writer.writerow(row)
-        print(f"[DISK SAVE] Appended to master CSV: {CSV_FILE}")
+            writer.writeheader()
+            writer.writerows(deduped_rows)
+        print(f"[DISK SAVE] Master CSV updated without duplicates ({len(deduped_rows)} total rows): {CSV_FILE}")
     except Exception as e:
         print(f"[CSV SAVE ERROR] {e}")
 

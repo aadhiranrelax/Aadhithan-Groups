@@ -77,6 +77,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnExportJson = document.getElementById('btn-export-json');
   const recordCountBadge = document.getElementById('record-count-badge');
 
+  // Top nav & mobile action triggers
+  const btnTopNew = document.getElementById('btn-top-new');
+  const topBtnNewForm = document.getElementById('top-btn-new-form');
+  const topBtnRecords = document.getElementById('top-btn-records');
+  const topRecordCountBadge = document.getElementById('top-record-count-badge');
+  const mBtnNewForm = document.getElementById('m-btn-new-form');
+  const btnModalNewRecord = document.getElementById('btn-modal-new-record');
+  const recordsCardsContainer = document.getElementById('records-cards-container');
+
   // Modals
   const recordsModal = document.getElementById('records-modal');
   const btnCloseRecords = document.getElementById('btn-close-records');
@@ -85,6 +94,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const recordsEmptyView = document.getElementById('records-empty');
   const recordsListWrapper = document.getElementById('records-list');
   const btnClearAllRecords = document.getElementById('btn-clear-all-records');
+
+  // Record Detail Modal
+  const recordDetailModal = document.getElementById('record-detail-modal');
+  const btnCloseDetail = document.getElementById('btn-close-detail');
+  const btnCloseDetailFooter = document.getElementById('btn-close-detail-footer');
+  const btnDetailLoad = document.getElementById('btn-detail-load');
+  const btnDetailPrint = document.getElementById('btn-detail-print');
+  const detailModalRef = document.getElementById('detail-modal-ref');
+  const detailModalSub = document.getElementById('detail-modal-sub');
+  const detailModalBody = document.getElementById('detail-modal-body');
+  let currentDetailRecord = null;
 
   const successModal = document.getElementById('success-modal');
   const succRefId = document.getElementById('succ-ref-id');
@@ -334,21 +354,33 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function retakePhoto() {
+    resetPhotoState();
+    startCamera();
+    updateProgress();
+  }
+
+  function resetPhotoState() {
     state.photoDataUrl = null;
     state.photoTimestamp = null;
-    photoPreviewImg.classList.add('hidden');
-    photoPreviewImg.src = '';
-    cameraPlaceholder.classList.remove('hidden');
-    photoStatusBadge.innerHTML = '<span class="badge badge-warning">Photo Pending</span>';
-    photoMetaStatus.textContent = 'Not captured';
-    photoMetaTime.textContent = '—';
-    btnRetakePhoto.classList.add('hidden');
-    btnStartCamera.classList.remove('hidden');
+    stopCameraTracks();
+    if (webcamVideo) webcamVideo.classList.add('hidden');
+    if (faceGuide) faceGuide.classList.add('hidden');
+    if (photoPreviewImg) {
+      photoPreviewImg.classList.add('hidden');
+      photoPreviewImg.src = '';
+    }
+    if (cameraPlaceholder) cameraPlaceholder.classList.remove('hidden');
+    if (photoStatusBadge) photoStatusBadge.innerHTML = '<span class="badge badge-warning">Photo Pending</span>';
+    if (photoMetaStatus) photoMetaStatus.textContent = 'Not captured';
+    if (photoMetaTime) photoMetaTime.textContent = '—';
+    if (btnRetakePhoto) btnRetakePhoto.classList.add('hidden');
+    if (btnStartCamera) btnStartCamera.classList.remove('hidden');
+    if (btnSnapPhoto) btnSnapPhoto.classList.add('hidden');
+    if (btnSwitchCamera) btnSwitchCamera.classList.add('hidden');
+    if (btnStopCamera) btnStopCamera.classList.add('hidden');
     if (photoFileInput) photoFileInput.value = '';
     if (photoCameraInput) photoCameraInput.value = '';
     if (photoGalleryInput) photoGalleryInput.value = '';
-    startCamera();
-    updateProgress();
   }
 
   function toggleCameraFacing() {
@@ -518,13 +550,17 @@ document.addEventListener('DOMContentLoaded', () => {
     updateProgress();
   }
 
-  function clearSignature() {
+  function clearSignature(silent = false) {
     state.strokes = [];
-    const ctx = sigCanvas.getContext('2d');
-    const rect = sigCanvas.getBoundingClientRect();
-    ctx.clearRect(0, 0, rect.width, rect.height);
+    if (sigCanvas) {
+      const ctx = sigCanvas.getContext('2d');
+      const rect = sigCanvas.getBoundingClientRect();
+      ctx.clearRect(0, 0, rect.width, rect.height);
+    }
     updateSignatureState();
-    showToast('Signature cleared.', 'warning');
+    if (!silent) {
+      showToast('Signature cleared.', 'warning');
+    }
   }
 
   function undoSigStroke() {
@@ -948,7 +984,19 @@ document.addEventListener('DOMContentLoaded', () => {
   function getRecordsDB() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY_RECORDS);
-      return raw ? JSON.parse(raw) : [];
+      if (!raw) return [];
+      const list = JSON.parse(raw);
+      if (!Array.isArray(list)) return [];
+      // Deduplicate by refId (preserving most recent)
+      const seen = new Set();
+      const deduped = [];
+      for (const item of list) {
+        if (item && item.refId && !seen.has(item.refId)) {
+          seen.add(item.refId);
+          deduped.push(item);
+        }
+      }
+      return deduped;
     } catch {
       return [];
     }
@@ -956,11 +1004,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function saveRecordToDB(record) {
     const list = getRecordsDB();
-    list.unshift(record); // Prepend to beginning
+    const existingIndex = list.findIndex(r => r.refId === record.refId);
+    if (existingIndex >= 0) {
+      list[existingIndex] = record;
+    } else {
+      list.unshift(record);
+    }
     localStorage.setItem(STORAGE_KEY_RECORDS, JSON.stringify(list));
     updateRecordsBadge();
 
-    // Persist to Server Disk (creates JSON, photo JPG, signature PNG, and Excel CSV)
+    // Persist to Server Disk (creates JSON, photo JPG, signature PNG, and deduplicated CSV)
     try {
       const res = await fetch('/api/save-record', {
         method: 'POST',
@@ -981,56 +1034,207 @@ document.addEventListener('DOMContentLoaded', () => {
     if (recordCountBadge) recordCountBadge.textContent = count;
     const mCountBadge = document.getElementById('m-record-count-badge');
     if (mCountBadge) mCountBadge.textContent = count;
+    if (topRecordCountBadge) topRecordCountBadge.textContent = count;
   }
 
-  function openRecordsModal() {
-    const records = getRecordsDB();
-    recordsTableBody.innerHTML = '';
-
-    if (records.length === 0) {
-      recordsEmptyView.classList.remove('hidden');
-      recordsListWrapper.classList.add('hidden');
-    } else {
-      recordsEmptyView.classList.add('hidden');
-      recordsListWrapper.classList.remove('hidden');
-
-      records.forEach((rec, idx) => {
-        const tr = document.createElement('tr');
-        const formattedDate = new Date(rec.timestamp).toLocaleDateString('en-GB');
-
-        tr.innerHTML = `
-          <td><strong class="mono">${rec.refId}</strong></td>
-          <td><strong>${escapeHtml(rec.section1.q1_full_name || '—')}</strong></td>
-          <td class="mono">${escapeHtml(rec.section1.q2_member_id || '—')}</td>
-          <td>${formattedDate}</td>
-          <td><span class="badge badge-success">${escapeHtml(rec.admin.verification_status || 'Submitted')}</span></td>
-          <td>${rec.photo?.dataUrl ? `<img src="${rec.photo.dataUrl}" class="record-thumb" alt="Photo">` : '—'}</td>
-          <td>${rec.declaration?.signatureDataUrl ? `<img src="${rec.declaration.signatureDataUrl}" class="record-sig-thumb" alt="Sign">` : '—'}</td>
-          <td>
-            <button type="button" class="btn btn-outline" style="padding: 0.25rem 0.5rem; font-size: 0.72rem;" onclick="window.viewArchivedRecord(${idx})">Load</button>
-          </td>
-        `;
-        recordsTableBody.appendChild(tr);
-      });
+  async function openRecordsModal() {
+    let records = getRecordsDB();
+    try {
+      const res = await fetch('/api/records');
+      if (res.ok) {
+        const serverRecs = await res.json();
+        if (Array.isArray(serverRecs) && serverRecs.length > 0) {
+          const map = new Map();
+          records.forEach(r => map.set(r.refId, r));
+          serverRecs.forEach(r => {
+            if (!map.has(r.refId)) map.set(r.refId, r);
+          });
+          records = Array.from(map.values());
+          localStorage.setItem(STORAGE_KEY_RECORDS, JSON.stringify(records));
+          updateRecordsBadge();
+        }
+      }
+    } catch (e) {
+      // offline fallback
     }
 
+    renderRecordsList(records);
     recordsModal.classList.remove('hidden');
+  }
+
+  function renderRecordsList(records) {
+    if (!recordsCardsContainer) return;
+    recordsCardsContainer.innerHTML = '';
+
+    if (!records || records.length === 0) {
+      recordsEmptyView.classList.remove('hidden');
+      recordsListWrapper.classList.add('hidden');
+      return;
+    }
+
+    recordsEmptyView.classList.add('hidden');
+    recordsListWrapper.classList.remove('hidden');
+
+    records.forEach((rec, idx) => {
+      const card = document.createElement('div');
+      card.className = 'record-item-card';
+
+      const formattedDate = rec.timestamp ? new Date(rec.timestamp).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
+      const statusText = rec.admin?.verification_status || 'Submitted';
+      const isApproved = statusText.toLowerCase().includes('approved') || statusText.toLowerCase().includes('verified');
+      const statusBadgeClass = isApproved ? 'badge-status-approved' : 'badge-status-pending';
+
+      const fullName = rec.section1?.q1_full_name || 'Member (Name Pending)';
+      const memberId = rec.section1?.q2_member_id || 'ID Pending';
+      const role = rec.section1?.q4_project_role || 'Member';
+      const projectName = rec.section1?.q3_project_name || 'Project Allocation';
+      const currency = rec.section1?.q5_currency || 'INR (₹)';
+      const amount = rec.section1?.q5_allocated_amount ? Number(rec.section1.q5_allocated_amount).toLocaleString() : '0.00';
+
+      card.innerHTML = `
+        <div class="rc-header">
+          <span class="rc-ref-pill">${escapeHtml(rec.refId)}</span>
+          <span class="rc-status-badge ${statusBadgeClass}">${escapeHtml(statusText)}</span>
+          <span class="rc-date">${formattedDate}</span>
+        </div>
+        <div class="rc-body">
+          <div class="rc-avatar-box">
+            ${rec.photo?.dataUrl ? `<img src="${rec.photo.dataUrl}" class="rc-avatar-img" alt="Photo">` : `<div class="rc-avatar-empty">👤</div>`}
+          </div>
+          <div class="rc-details">
+            <h4 class="rc-member-name">${escapeHtml(fullName)}</h4>
+            <div class="rc-subline"><span class="rc-chip-id">${escapeHtml(memberId)}</span> &bull; <span>${escapeHtml(role)}</span></div>
+            <div class="rc-proj-line"><strong>${escapeHtml(projectName)}</strong> &bull; <span class="rc-amount-highlight">${escapeHtml(currency)} ${escapeHtml(amount)}</span></div>
+          </div>
+        </div>
+        <div class="rc-footer-actions">
+          <button type="button" class="btn btn-outline btn-rc-view">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            View Dossier
+          </button>
+          <button type="button" class="btn btn-primary btn-rc-load">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            Load into Form
+          </button>
+        </div>
+      `;
+
+      // Entire card tap opens Detail Modal
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-rc-load')) {
+          e.stopPropagation();
+          loadRecordIntoForm(rec);
+          return;
+        }
+        openRecordDetailModal(rec);
+      });
+
+      recordsCardsContainer.appendChild(card);
+    });
+  }
+
+  function openRecordDetailModal(rec) {
+    if (!rec) return;
+    currentDetailRecord = rec;
+
+    detailModalRef.textContent = rec.refId;
+    detailModalSub.textContent = `Member Verification Dossier — ${rec.section1?.q1_full_name || 'Member'}`;
+
+    const formattedDate = rec.timestamp ? new Date(rec.timestamp).toLocaleString('en-GB') : '—';
+    const statusText = rec.admin?.verification_status || 'Verified & Submitted';
+
+    const sec1 = rec.section1 || {};
+    const sec2 = rec.section2 || {};
+    const sec3 = rec.section3 || {};
+    const sec4 = rec.section4 || {};
+    const decl = rec.declaration || {};
+    const admin = rec.admin || {};
+
+    detailModalBody.innerHTML = `
+      <div class="dossier-preview-layout">
+        <!-- Photo and Signature Visual Proof Box -->
+        <div class="dossier-visuals-row">
+          <div class="dossier-photo-card">
+            <span class="dossier-caption">Captured Member Photo</span>
+            <div class="dossier-photo-frame">
+              ${rec.photo?.dataUrl ? `<img src="${rec.photo.dataUrl}" alt="Photo" class="dossier-full-img">` : `<div class="dossier-no-img">No photo captured</div>`}
+            </div>
+            <span class="dossier-subtext">Verified at ${rec.photo?.timestamp || formattedDate}</span>
+          </div>
+
+          <div class="dossier-sig-card">
+            <span class="dossier-caption">Customer Digital Signature</span>
+            <div class="dossier-sig-frame">
+              ${decl.signatureDataUrl ? `<img src="${decl.signatureDataUrl}" alt="Signature" class="dossier-full-sig">` : `<div class="dossier-no-img">No signature captured</div>`}
+            </div>
+            <span class="dossier-subtext">${escapeHtml(decl.member_name || sec1.q1_full_name || 'Member')} &bull; ${escapeHtml(decl.date || 'Signed')}</span>
+          </div>
+        </div>
+
+        <!-- Identification Summary -->
+        <div class="dossier-summary-card">
+          <h4 class="dossier-section-title">1. Identification & Allocation</h4>
+          <div class="dossier-info-grid">
+            <div class="dossier-cell"><span class="d-label">Full Name:</span> <strong class="d-val">${escapeHtml(sec1.q1_full_name || '—')}</strong></div>
+            <div class="dossier-cell"><span class="d-label">Member ID:</span> <strong class="d-val mono">${escapeHtml(sec1.q2_member_id || '—')}</strong></div>
+            <div class="dossier-cell"><span class="d-label">Project:</span> <span class="d-val">${escapeHtml(sec1.q3_project_name || '—')}</span></div>
+            <div class="dossier-cell"><span class="d-label">Role:</span> <span class="d-val">${escapeHtml(sec1.q4_project_role || '—')}</span></div>
+            <div class="dossier-cell"><span class="d-label">Allocated Amount:</span> <strong class="d-val text-primary">${escapeHtml(sec1.q5_currency || 'INR')} ${escapeHtml(sec1.q5_allocated_amount || '0.00')}</strong></div>
+            <div class="dossier-cell"><span class="d-label">Mobile:</span> <span class="d-val mono">${escapeHtml(sec3.q13_mobile_number || '—')}</span></div>
+            <div class="dossier-cell"><span class="d-label">Agreement Date:</span> <span class="d-val">${escapeHtml(sec3.q14_agreement_date || '—')}</span></div>
+            <div class="dossier-cell"><span class="d-label">Verification Status:</span> <span class="badge badge-success">${escapeHtml(statusText)}</span></div>
+          </div>
+        </div>
+
+        <!-- Question Highlights -->
+        <div class="dossier-summary-card">
+          <h4 class="dossier-section-title">2. Verification Questionnaire Highlights</h4>
+          <div class="dossier-chips-wrap">
+            <div class="d-chip"><span class="dc-q">Q6 Agreement Copy Received:</span> <strong class="dc-a">${escapeHtml(sec2.q6_received_agreement || '—')}</strong></div>
+            <div class="d-chip"><span class="dc-q">Q7 Previous Funds Received:</span> <strong class="dc-a">${escapeHtml(sec2.q7_received_funds_previously || '—')}</strong></div>
+            <div class="d-chip"><span class="dc-q">Q8 Registration Fee Paid:</span> <strong class="dc-a">${escapeHtml(sec2.q8_paid_registration_fees || '—')}</strong></div>
+            <div class="d-chip"><span class="dc-q">Q9 Details Match Agreement:</span> <strong class="dc-a">${escapeHtml(sec2.q9_details_match_agreement || '—')}</strong></div>
+            <div class="d-chip"><span class="dc-q">Q15 Individual Allocation Confirmed:</span> <strong class="dc-a">${escapeHtml(sec3.q15_confirmed_individual_allocation || '—')}</strong></div>
+            <div class="d-chip"><span class="dc-q">Q26 Officially Approved:</span> <strong class="dc-a">${escapeHtml(sec4.q26_officially_approved || '—')}</strong></div>
+            <div class="d-chip"><span class="dc-q">Q27 Approved Amount:</span> <strong class="dc-a">${escapeHtml(sec4.q27_currency || 'INR')} ${escapeHtml(sec4.q27_approved_amount || '0.00')}</strong></div>
+          </div>
+        </div>
+
+        <!-- Administrative Sign-Off -->
+        <div class="dossier-summary-card">
+          <h4 class="dossier-section-title">3. Compliance Sign-Off</h4>
+          <div class="dossier-info-grid">
+            <div class="dossier-cell"><span class="d-label">Officer Name:</span> <span class="d-val">${escapeHtml(admin.officer_name || '—')}</span></div>
+            <div class="dossier-cell"><span class="d-label">Officer ID:</span> <span class="d-val mono">${escapeHtml(admin.officer_id || '—')}</span></div>
+            <div class="dossier-cell"><span class="d-label">Verified Date:</span> <span class="d-val">${escapeHtml(admin.verified_date || '—')}</span></div>
+            <div class="dossier-cell"><span class="d-label">Official Notes:</span> <span class="d-val">${escapeHtml(admin.official_notes || 'None')}</span></div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    recordDetailModal.classList.remove('hidden');
+  }
+
+  function loadRecordIntoForm(rec) {
+    if (!rec) return;
+    localStorage.setItem(STORAGE_KEY_DRAFT, JSON.stringify(rec));
+    state.refId = rec.refId;
+    docRefNo.textContent = rec.refId;
+    printRefCopies.forEach(el => el.textContent = rec.refId);
+    checkAndRestoreDraft();
+
+    if (recordsModal) recordsModal.classList.add('hidden');
+    if (recordDetailModal) recordDetailModal.classList.add('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    showToast(`Loaded record ${rec.refId} (${rec.section1?.q1_full_name || 'Member'}) into the form!`, 'success');
   }
 
   window.viewArchivedRecord = function(idx) {
     const records = getRecordsDB();
     const rec = records[idx];
     if (!rec) return;
-
-    if (confirm(`Load record ${rec.refId} (${rec.section1.q1_full_name}) into the form? This will replace current form fields.`)) {
-      recordsModal.classList.add('hidden');
-      localStorage.setItem(STORAGE_KEY_DRAFT, JSON.stringify(rec));
-      state.refId = rec.refId;
-      docRefNo.textContent = rec.refId;
-      printRefCopies.forEach(el => el.textContent = rec.refId);
-      checkAndRestoreDraft();
-      showToast(`Loaded record ${rec.refId}`, 'success');
-    }
+    openRecordDetailModal(rec);
   };
 
   function clearAllRecords() {
@@ -1066,26 +1270,51 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function startNewVerification() {
-    if (confirm('Start a new verification form? Make sure you have saved or printed the current submission.')) {
-      form.reset();
-      state.refId = generateRefId();
-      docRefNo.textContent = state.refId;
-      printRefCopies.forEach(el => el.textContent = state.refId);
-
-      clearSignature();
-      retakePhoto();
-
-      // Reset dates
-      const today = new Date().toISOString().split('T')[0];
-      if (declDate) declDate.value = today;
-      if (adminVerifiedDate) adminVerifiedDate.value = today;
-
-      localStorage.removeItem(STORAGE_KEY_DRAFT);
-      successModal.classList.add('hidden');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      showToast('New verification form initiated.', 'success');
-      updateProgress();
+    if (state.hasUnsavedChanges || state.photoDataUrl || state.signatureDataUrl) {
+      if (!confirm('Start a new verification form for another member? Current unsaved form entries will be cleared.')) {
+        return;
+      }
     }
+
+    // 1. Reset form fields
+    form.reset();
+
+    // 2. Generate a new reference ID
+    state.refId = generateRefId();
+    docRefNo.textContent = state.refId;
+    printRefCopies.forEach(el => el.textContent = state.refId);
+
+    // 3. Clear signature canvas cleanly
+    clearSignature(true);
+
+    // 4. Reset photo state cleanly
+    resetPhotoState();
+
+    // 5. Hide all conditional detail boxes
+    document.querySelectorAll('[id$="_details_box"]').forEach(box => {
+      box.classList.add('hidden');
+      const input = box.querySelector('input, textarea');
+      if (input) input.value = '';
+    });
+
+    // 6. Reset dates
+    const today = new Date().toISOString().split('T')[0];
+    if (declDate) declDate.value = today;
+    if (adminVerifiedDate) adminVerifiedDate.value = today;
+
+    // 7. Clear saved draft
+    localStorage.removeItem(STORAGE_KEY_DRAFT);
+    state.hasUnsavedChanges = false;
+
+    // 8. Close any open modals
+    if (recordsModal) recordsModal.classList.add('hidden');
+    if (successModal) successModal.classList.add('hidden');
+    if (recordDetailModal) recordDetailModal.classList.add('hidden');
+
+    // 9. Smooth scroll to top and update progress
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    showToast(`New form initialized: ${state.refId}. Ready for next member!`, 'success');
+    updateProgress();
   }
 
   // =========================================================================
@@ -1147,13 +1376,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Action buttons
-    btnSaveDraft.addEventListener('click', () => saveDraft(false));
-    btnPrint.addEventListener('click', printDossier);
-    btnExportJson.addEventListener('click', exportJson);
-    btnResetForm.addEventListener('click', startNewVerification);
-    btnViewRecords.addEventListener('click', openRecordsModal);
+    if (btnSaveDraft) btnSaveDraft.addEventListener('click', () => saveDraft(false));
+    if (btnPrint) btnPrint.addEventListener('click', printDossier);
+    if (btnExportJson) btnExportJson.addEventListener('click', exportJson);
+    if (btnResetForm) btnResetForm.addEventListener('click', startNewVerification);
+    if (btnViewRecords) btnViewRecords.addEventListener('click', openRecordsModal);
+
+    // Top Header & Modal New Form triggers
+    if (btnTopNew) btnTopNew.addEventListener('click', startNewVerification);
+    if (topBtnNewForm) topBtnNewForm.addEventListener('click', startNewVerification);
+    if (topBtnRecords) topBtnRecords.addEventListener('click', openRecordsModal);
+    if (btnModalNewRecord) btnModalNewRecord.addEventListener('click', startNewVerification);
 
     // Mobile Sticky Floating Bar Actions
+    if (mBtnNewForm) mBtnNewForm.addEventListener('click', startNewVerification);
     const mBtnSaveDraft = document.getElementById('m-btn-save-draft');
     const mBtnViewRecords = document.getElementById('m-btn-view-records');
     const mBtnSubmitQuick = document.getElementById('m-btn-submit-quick');
@@ -1161,8 +1397,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mBtnSaveDraft) mBtnSaveDraft.addEventListener('click', () => saveDraft(false));
     if (mBtnViewRecords) mBtnViewRecords.addEventListener('click', openRecordsModal);
     if (mBtnSubmitQuick) mBtnSubmitQuick.addEventListener('click', (e) => {
-      // Trigger submit logic
       handleFormSubmit(e);
+    });
+
+    // Detail Modal actions
+    if (btnCloseDetail) btnCloseDetail.addEventListener('click', () => recordDetailModal.classList.add('hidden'));
+    if (btnCloseDetailFooter) btnCloseDetailFooter.addEventListener('click', () => recordDetailModal.classList.add('hidden'));
+    if (btnDetailLoad) btnDetailLoad.addEventListener('click', () => loadRecordIntoForm(currentDetailRecord));
+    if (btnDetailPrint) btnDetailPrint.addEventListener('click', () => {
+      loadRecordIntoForm(currentDetailRecord);
+      setTimeout(() => window.print(), 350);
     });
 
     // Form Submission
@@ -1179,10 +1423,12 @@ document.addEventListener('DOMContentLoaded', () => {
     btnNewVerification.addEventListener('click', startNewVerification);
 
     // Close modals on clicking outside
-    [recordsModal, successModal].forEach(modal => {
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.add('hidden');
-      });
+    [recordsModal, successModal, recordDetailModal].forEach(modal => {
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) modal.classList.add('hidden');
+        });
+      }
     });
 
     // Warn on beforeunload if unsaved

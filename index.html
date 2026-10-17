@@ -26,11 +26,31 @@
         </div>
         <div>
           <h1 class="brand-title">AADHITHAN GROUPS</h1>
-          <p class="brand-subtitle">Official Verification & Compliance Portal</p>
+          <p class="brand-subtitle">Official Verification & Compliance</p>
         </div>
       </div>
 
+      <!-- Mobile Quick Top Action Buttons -->
+      <div class="mobile-top-actions">
+        <button type="button" class="btn-top-pill" id="top-btn-new-form" title="Start New Verification">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>New Form</span>
+        </button>
+        <button type="button" class="btn-top-pill" id="top-btn-records" title="View Saved Records">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          <span>Records (<span id="top-record-count-badge">0</span>)</span>
+        </button>
+      </div>
+
       <div class="nav-actions">
+        <button type="button" class="btn btn-primary" id="btn-top-new" title="Start a fresh verification for another member">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          + New Member
+        </button>
+
         <button type="button" class="btn btn-outline" id="btn-save-draft" title="Save current progress locally">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
@@ -1105,6 +1125,14 @@
   <!-- Mobile Sticky Bottom Floating Action Bar (Exclusively for Mobile Screen Experience) -->
   <aside class="mobile-sticky-bottom-bar no-print" id="mobile-sticky-bar" aria-label="Mobile Quick Actions">
     <div class="mobile-bar-inner">
+      <button type="button" class="mobile-bar-btn" id="m-btn-new-form" title="Start New Verification">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        <span>+ New</span>
+      </button>
+
       <button type="button" class="mobile-bar-btn" id="m-btn-save-draft" title="Save Progress Draft">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
@@ -1127,18 +1155,11 @@
         <span>Records</span>
       </button>
 
-      <div class="mobile-progress-widget" id="m-progress-widget" title="Completion Progress">
-        <div class="m-progress-pill-box">
-          <span class="m-progress-val" id="m-progress-text">0%</span>
-        </div>
-        <span class="m-progress-label">Progress</span>
-      </div>
-
       <button type="button" class="mobile-bar-submit-btn" id="m-btn-submit-quick">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <polyline points="20 6 9 17 4 12"></polyline>
         </svg>
-        <span>Submit</span>
+        <span>Submit Record</span>
       </button>
     </div>
   </aside>
@@ -1153,10 +1174,13 @@
           </div>
           <div>
             <h3>Saved Verification Records</h3>
-            <p>Submissions stored locally in this device browser</p>
+            <p>Tap any record below to view details or edit</p>
           </div>
         </div>
-        <button type="button" class="btn-modal-close" id="btn-close-records">&times;</button>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <button type="button" class="btn btn-primary" id="btn-modal-new-record" style="padding: 0.4rem 0.75rem; font-size: 0.8rem; font-weight: 700;">+ New Form</button>
+          <button type="button" class="btn-modal-close" id="btn-close-records">&times;</button>
+        </div>
       </div>
 
       <div class="modal-body">
@@ -1169,23 +1193,8 @@
           <span>Submitted member verifications will be logged here for easy review and printing.</span>
         </div>
         <div id="records-list" class="records-table-wrapper hidden">
-          <table class="records-table">
-            <thead>
-              <tr>
-                <th>Ref ID</th>
-                <th>Member Name</th>
-                <th>Member ID</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Photo</th>
-                <th>Sign</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="records-table-body">
-              <!-- Dynamically populated -->
-            </tbody>
-          </table>
+          <!-- Dynamically populated mobile card list / desktop table -->
+          <div class="records-cards-container" id="records-cards-container"></div>
         </div>
       </div>
 
@@ -1193,6 +1202,39 @@
         <button type="button" class="btn btn-outline" id="btn-clear-all-records">Clear All Records</button>
         <button type="button" class="btn btn-secondary" id="btn-close-records-footer">Close</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Record Detail Viewer Modal -->
+  <div class="modal-backdrop hidden" id="record-detail-modal">
+    <div class="modal-card modal-detail-card">
+      <div class="modal-header">
+        <div class="brand-group">
+          <div class="brand-logo sm">
+            <img src="assets/logo.png" alt="Aadhithan Groups Logo" class="brand-logo-img">
+          </div>
+          <div>
+            <h3 id="detail-modal-ref">AG-VRF-2026-0000</h3>
+            <p id="detail-modal-sub">Member Verification Record Dossier</p>
+          </div>
+        </div>
+        <button type="button" class="btn-modal-close" id="btn-close-detail">&times;</button>
+      </div>
+
+      <div class="modal-body" id="detail-modal-body">
+        <!-- Injected dynamically by JavaScript -->
+      </div>
+
+      <div class="modal-footer detail-modal-footer">
+        <button type="button" class="btn btn-primary" id="btn-detail-load">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          Load & Edit in Form
+        </button>
+        <button type="button" class="btn btn-secondary" id="btn-detail-print">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          Print Dossier
+        </button>
+        <button type="button" class="btn btn-outline" id="btn-close-detail-footer">Close</button>
     </div>
   </div>
 
