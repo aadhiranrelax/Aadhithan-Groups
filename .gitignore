@@ -1,0 +1,23 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local user configs & secrets
+email_config.json
+latest_otp.json
+
+# Local submission data (preserve directories)
+data/records/*.json
+data/photos/*
+data/signatures/*
+data/submissions.csv
+!data/records/.gitkeep
+!data/photos/.gitkeep
+!data/signatures/.gitkeep
+
+# System & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="theme-color" content="#1e3a8a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+  <title>Aadhithan Groups - Member Verification & Compliance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="apple-touch-icon" href="assets/logo.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Top Navigation & Action Bar -->
+  <header class="top-nav no-print">
+    <div class="nav-container">
+      <div class="brand-group">
+        <div class="brand-logo">
+          <img src="assets/logo.png" alt="Aadhithan Groups Logo" class="brand-logo-img">
+        </div>
+        <div>
+          <h1 class="brand-title">AADHITHAN GROUPS</h1>
+          <p class="brand-subtitle">Official Verification & Compliance Portal</p>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <button type="button" class="btn btn-outline" id="btn-save-draft" title="Save current progress locally">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+          Save Draft
+        </button>
+
+        <button type="button" class="btn btn-outline" id="btn-view-records" title="View previously submitted verification records">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          Past Records (<span id="record-count-badge">0</span>)
+        </button>
+
+        <button type="button" class="btn btn-secondary" id="btn-print" title="Print or save as official PDF dossier">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+          </svg>
+          Print / PDF
+        </button>
+      </div>
+    </div>
+
+    <!-- Progress Tracker -->
+    <div class="progress-bar-container">
+      <div class="progress-info">
+        <span class="progress-label">Form Progress: <strong id="progress-percent">0%</strong></span>
+        <span class="progress-status" id="progress-status-text">31 Questions Required</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="page-container">
+    
+    <!-- Printable Formal Letterhead (Visible in print and at top) -->
+    <section class="document-header">
+      <div class="doc-header-top">
+        <div class="doc-emblem">
+          <img src="assets/logo.png" alt="Aadhithan Groups Emblem" class="doc-emblem-img">
+        </div>
+        <div class="doc-title-block">
+          <h2>AADHITHAN GROUPS</h2>
+          <h3>DEPARTMENT OF COMPLIANCE & PROJECT ALLOCATION</h3>
+          <p class="doc-type">OFFICIAL MEMBER VERIFICATION RECORD</p>
+        </div>
+        <div class="doc-meta-badge">
+          <div class="meta-row"><span class="meta-label">REF NO:</span> <strong id="doc-ref-no" class="mono">AG-VRF-2026-0001</strong></div>
+          <div class="meta-row"><span class="meta-label">DATE:</span> <span id="doc-cur-date">17 Oct 2026</span></div>
+          <div class="meta-row"><span class="meta-label">SECURITY:</span> <span class="badge-confidential">CONFIDENTIAL</span></div>
+        </div>
+      </div>
+      <div class="doc-instructions-banner no-print">
+        <div class="banner-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+        </div>
+        <div class="banner-text">
+          <strong>Verification Guidelines:</strong> Please complete all 4 sections thoroughly. Capture the member's photo using the live camera or file upload, and obtain the digital customer signature at the bottom before administrative submission.
+        </div>
+      </div>
+    </section>
+
+    <!-- Verification Form -->
+    <form id="verification-form" autocomplete="off" novalidate>
+
+      <!-- MEMBER PHOTO VERIFICATION MODULE -->
+      <section class="form-card photo-card" id="section-photo">
+        <div class="card-header">
+          <div class="header-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+              <circle cx="12" cy="13" r="4"></circle>
+            </svg>
+          </div>
+          <div>
+            <h3 class="card-title">MEMBER PHOTO VERIFICATION</h3>
+            <p class="card-subtitle">Live photo capture or identity portrait upload</p>
+          </div>
+          <div class="header-badge" id="photo-status-badge">
+            <span class="badge badge-warning">Photo Pending</span>
+          </div>
+        </div>
+
+        <div class="photo-capture-layout">
+          <!-- Camera Feed / Preview Container -->
+          <div class="camera-viewport-wrapper">
+            <div class="camera-viewport" id="camera-viewport">
+              <!-- Video stream -->
+              <video id="webcam" autoplay playsinline muted class="camera-video hidden"></video>
+              
+              <!-- Oval alignment guide -->
+              <div class="face-guide hidden" id="face-guide">
+                <div class="guide-oval"></div>
+                <span class="guide-hint">Align face within oval</span>
+              </div>
+
+              <!-- Static placeholder when camera off -->
+              <div class="camera-placeholder" id="camera-placeholder">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.5">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <p>No photo captured yet</p>
+                <span class="subtext">Use camera to take a live snapshot or upload a member image</span>
+              </div>
+
+              <!-- Captured Image Preview -->
+              <img id="photo-preview-img" class="captured-preview hidden" alt="Captured Member Photo">
+            </div>
+
+            <canvas id="photo-canvas" class="hidden"></canvas>
+          </div>
+
+          <!-- Camera Controls -->
+          <div class="photo-controls">
+            <div class="photo-btn-group">
+              <button type="button" class="btn btn-primary" id="btn-start-camera">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                  <circle cx="12" cy="13" r="4"></circle>
+                </svg>
+                Open Camera
+              </button>
+
+              <button type="button" class="btn btn-success hidden" id="btn-snap-photo">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
+                </svg>
+                Capture Photo
+              </button>
+
+              <button type="button" class="btn btn-secondary hidden" id="btn-switch-camera" title="Switch front/back camera">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                </svg>
+                Flip Camera
+              </button>
+
+              <button type="button" class="btn btn-secondary hidden" id="btn-stop-camera">
+                Close Camera
+              </button>
+
+              <button type="button" class="btn btn-outline hidden" id="btn-retake-photo">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="1 4 1 10 7 10"></polyline>
+                  <polyline points="23 20 23 14 17 14"></polyline>
+                  <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
+                </svg>
+                Retake
+              </button>
+
+              <div class="upload-divider"><span>OR</span></div>
+
+              <label class="btn btn-outline file-upload-label" for="photo-file-input">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                Upload Photo File
+              </label>
+              <input type="file" id="photo-file-input" accept="image/*" capture="user" class="hidden-input">
+            </div>
+
+            <div class="photo-metadata" id="photo-meta-info">
+              <div class="meta-item"><span class="meta-tag">Status:</span> <span id="photo-meta-status">Not captured</span></div>
+              <div class="meta-item"><span class="meta-tag">Timestamp:</span> <span id="photo-meta-time">—</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 1: MEMBER DETAILS -->
+      <section class="form-card" id="section-1">
+        <div class="card-header section-header">
+          <div class="section-tag">SECTION 1</div>
+          <div>
+            <h3 class="card-title">MEMBER DETAILS</h3>
+            <p class="card-subtitle">Primary identification and project role information</p>
+          </div>
+        </div>
+
+        <div class="questions-grid">
+          <!-- Question 1 -->
+          <div class="form-group span-2">
+            <label class="question-label" for="q1_full_name">
+              <span class="q-num">Question 1:</span> What is your full name? <span class="required">*</span>
+            </label>
+            <input type="text" id="q1_full_name" name="q1_full_name" class="form-control" placeholder="Enter complete full name as per official records" required>
+            <div class="field-hint">Ensure name matches official ID proof and agreement document.</div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="form-group">
+            <label class="question-label" for="q2_member_id">
+              <span class="q-num">Question 2:</span> What is your Member ID or Registration Number? <span class="required">*</span>
+            </label>
+            <input type="text" id="q2_member_id" name="q2_member_id" class="form-control mono" placeholder="e.g. AG-MEM-88214" required>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="form-group">
+            <label class="question-label" for="q3_project_name">
+              <span class="q-num">Question 3:</span> What is the official name of the project? <span class="required">*</span>
+            </label>
+            <input type="text" id="q3_project_name" name="q3_project_name" class="form-control" placeholder="Enter official sanctioned project title" required>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="form-group">
+            <label class="question-label" for="q4_project_role">
+              <span class="q-num">Question 4:</span> What is your role in this project? <span class="required">*</span>
+            </label>
+            <input type="text" id="q4_project_role" name="q4_project_role" class="form-control" placeholder="e.g. Lead Beneficiary, Project Partner, Contractor, Member" required>
+          </div>
+
+          <!-- Question 5 -->
+          <div class="form-group">
+            <label class="question-label">
+              <span class="q-num">Question 5:</span> What is the total amount allocated to you according to your agreement? <span class="required">*</span>
+            </label>
+            <div class="amount-currency-group">
+              <div class="currency-select-wrapper">
+                <select id="q5_currency" name="q5_currency" class="form-control currency-select">
+                  <option value="INR (₹)" selected>INR (₹)</option>
+                  <option value="USD ($)">USD ($)</option>
+                  <option value="EUR (€)">EUR (€)</option>
+                  <option value="GBP (£)">GBP (£)</option>
+                  <option value="AED">AED</option>
+                  <option value="SGD">SGD</option>
+                </select>
+              </div>
+              <input type="number" id="q5_allocated_amount" name="q5_allocated_amount" class="form-control amount-input" placeholder="0.00" step="any" min="0" inputmode="decimal" required>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: AGREEMENT AND PAYMENT DETAILS -->
+      <section class="form-card" id="section-2">
+        <div class="card-header section-header">
+          <div class="section-tag">SECTION 2</div>
+          <div>
+            <h3 class="card-title">AGREEMENT AND PAYMENT DETAILS</h3>
+            <p class="card-subtitle">Prior disbursement history and agreement conformance</p>
+          </div>
+        </div>
+
+        <div class="questions-list">
+          <!-- Question 6 -->
+          <div class="question-block" id="block-q6">
+            <div class="q-header">
+              <span class="q-num">Question 6:</span>
+              <span class="q-text">Have you received a copy of your official agreement? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q6_received_agreement" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q6_received_agreement" value="No">
+                <span class="chip-label">No</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 7 -->
+          <div class="question-block" id="block-q7">
+            <div class="q-header">
+              <span class="q-num">Question 7:</span>
+              <span class="q-text">Have you received any funds under this project previously? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q7_received_funds_previously" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q7_received_funds_previously" value="No">
+                <span class="chip-label">No</span>
+              </label>
+            </div>
+            <!-- Conditional Details for Q7 -->
+            <div class="conditional-box hidden" id="q7_details_box">
+              <label class="sub-label" for="q7_amount_received">If yes, specify the amount received: <span class="required">*</span></label>
+              <input type="text" id="q7_amount_received" name="q7_amount_received" class="form-control" placeholder="Specify previous amount received (with currency/details)">
+            </div>
+          </div>
+
+          <!-- Question 8 -->
+          <div class="question-block" id="block-q8">
+            <div class="q-header">
+              <span class="q-num">Question 8:</span>
+              <span class="q-text">Have you paid any registration fees or other charges related to this project? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q8_paid_registration_fees" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q8_paid_registration_fees" value="No">
+                <span class="chip-label">No</span>
+              </label>
+            </div>
+            <!-- Conditional Details for Q8 -->
+            <div class="conditional-box hidden" id="q8_details_box">
+              <label class="sub-label" for="q8_fee_amount_reason">If yes, specify the amount and reason: <span class="required">*</span></label>
+              <input type="text" id="q8_fee_amount_reason" name="q8_fee_amount_reason" class="form-control" placeholder="e.g. ₹5,000 for documentation / registration fee">
+            </div>
+          </div>
+
+          <!-- Question 9 -->
+          <div class="question-block" id="block-q9">
+            <div class="q-header">
+              <span class="q-num">Question 9:</span>
+              <span class="q-text">Do your name, Member ID, and allocated amount match the details in your agreement? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q9_details_match_agreement" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q9_details_match_agreement" value="No">
+                <span class="chip-label">No</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q9_details_match_agreement" value="Needs Correction">
+                <span class="chip-label">Needs Correction</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 10 -->
+          <div class="question-block" id="block-q10">
+            <div class="q-header">
+              <span class="q-num">Question 10:</span>
+              <span class="q-text">Is the information you have provided accurate to the best of your knowledge? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q10_info_accurate" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q10_info_accurate" value="No">
+                <span class="chip-label">No</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 11 -->
+          <div class="question-block" id="block-q11">
+            <div class="q-header">
+              <span class="q-num">Question 11:</span>
+              <span class="q-text">Do you authorize the designated administrator to verify your details against the official project records? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q11_authorize_verification" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q11_authorize_verification" value="No">
+                <span class="chip-label">No</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 12 -->
+          <div class="question-block" id="block-q12">
+            <div class="q-header">
+              <span class="q-num">Question 12:</span>
+              <span class="q-text">Would you like to receive an official verification status update? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q12_receive_status_update" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q12_receive_status_update" value="No">
+                <span class="chip-label">No</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: CONTACT AND AGREEMENT VERIFICATION -->
+      <section class="form-card" id="section-3">
+        <div class="card-header section-header">
+          <div class="section-tag">SECTION 3</div>
+          <div>
+            <h3 class="card-title">CONTACT AND AGREEMENT VERIFICATION</h3>
+            <p class="card-subtitle">Communication channels, agreement dates, and funding compliance audit</p>
+          </div>
+        </div>
+
+        <div class="questions-list">
+          <div class="grid-2-col">
+            <!-- Question 13 -->
+            <div class="form-group">
+              <label class="question-label" for="q13_mobile_number">
+                <span class="q-num">Question 13:</span> What is your registered mobile number? <span class="required">*</span>
+              </label>
+              <input type="tel" id="q13_mobile_number" name="q13_mobile_number" class="form-control" placeholder="+91 98765 43210" inputmode="tel" autocomplete="tel" required>
+              <div class="field-hint">Must match official registration records for SMS verification.</div>
+            </div>
+
+            <!-- Question 14 -->
+            <div class="form-group">
+              <label class="question-label" for="q14_agreement_date">
+                <span class="q-num">Question 14:</span> What is the date of your agreement? <span class="required">*</span>
+              </label>
+              <input type="date" id="q14_agreement_date" name="q14_agreement_date" class="form-control" required>
+              <div class="field-hint">Mention date as executed on the agreement deed.</div>
+            </div>
+          </div>
+
+          <!-- Question 15 -->
+          <div class="question-block" id="block-q15">
+            <div class="q-header">
+              <span class="q-num">Question 15:</span>
+              <span class="q-text">Has the funding organization officially confirmed your individual fund allocation? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q15_confirmed_individual_allocation" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q15_confirmed_individual_allocation" value="No">
+                <span class="chip-label">No</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q15_confirmed_individual_allocation" value="Not Sure">
+                <span class="chip-label">Not Sure</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 16 -->
+          <div class="question-block" id="block-q16">
+            <div class="q-header">
+              <span class="q-num">Question 16:</span>
+              <span class="q-text">Has the funding organization officially confirmed the amount allocated to you? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q16_confirmed_amount" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q16_confirmed_amount" value="No">
+                <span class="chip-label">No</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q16_confirmed_amount" value="Pending Confirmation">
+                <span class="chip-label">Pending Confirmation</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 17 -->
+          <div class="question-block" id="block-q17">
+            <div class="q-header">
+              <span class="q-num">Question 17:</span>
+              <span class="q-text">Have you received official written communication regarding the release of your funds? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q17_written_communication" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q17_written_communication" value="No">
+                <span class="chip-label">No</span>
+              </label>
+            </div>
+            <!-- Conditional Details for Q17 -->
+            <div class="conditional-box hidden" id="q17_details_box">
+              <label class="sub-label" for="q17_reference_number">If yes, provide the reference number: <span class="required">*</span></label>
+              <input type="text" id="q17_reference_number" name="q17_reference_number" class="form-control mono" placeholder="e.g. REL-ORD-2026/094">
+            </div>
+          </div>
+
+          <!-- Question 18 -->
+          <div class="question-block" id="block-q18">
+            <div class="q-header">
+              <span class="q-num">Question 18:</span>
+              <span class="q-text">Have you completed the requirements mentioned in your agreement? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q18_completed_requirements" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q18_completed_requirements" value="No">
+                <span class="chip-label">No</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q18_completed_requirements" value="Not Sure">
+                <span class="chip-label">Not Sure</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 19 -->
+          <div class="question-block" id="block-q19">
+            <div class="q-header">
+              <span class="q-num">Question 19:</span>
+              <span class="q-text">Are any documents or verification steps still pending? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q19_pending_steps" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q19_pending_steps" value="No">
+                <span class="chip-label">No</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q19_pending_steps" value="Not Sure">
+                <span class="chip-label">Not Sure</span>
+              </label>
+            </div>
+            <!-- Conditional Details for Q19 -->
+            <div class="conditional-box hidden" id="q19_details_box">
+              <label class="sub-label" for="q19_pending_details">If yes, provide details: <span class="required">*</span></label>
+              <textarea id="q19_pending_details" name="q19_pending_details" class="form-control" rows="2" placeholder="List documents or steps pending completion..."></textarea>
+            </div>
+          </div>
+
+          <!-- Question 20 -->
+          <div class="question-block" id="block-q20">
+            <div class="q-header">
+              <span class="q-num">Question 20:</span>
+              <span class="q-text">Have your relevant details been verified through an authorized official channel? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q20_channel_verified" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q20_channel_verified" value="No">
+                <span class="chip-label">No</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q20_channel_verified" value="Not Applicable">
+                <span class="chip-label">Not Applicable</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 21 -->
+          <div class="question-block alert-styled-block" id="block-q21">
+            <div class="q-header">
+              <span class="q-num">Question 21:</span>
+              <span class="q-text">Has anyone asked you to pay an additional fee to release your allocated funds? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip danger-chip">
+                <input type="radio" name="q21_additional_fee_asked" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q21_additional_fee_asked" value="No">
+                <span class="chip-label">No</span>
+              </label>
+            </div>
+            <!-- Conditional Details for Q21 -->
+            <div class="conditional-box hidden alert-box" id="q21_details_box">
+              <div class="warning-callout">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                  <line x1="12" y1="9" x2="12" y2="13"></line>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                <span>Compliance Alert: Aadhithan Groups strictly prohibits unauthorized release demands. Please provide specifics below.</span>
+              </div>
+              <label class="sub-label" for="q21_fee_details">If yes, provide details: <span class="required">*</span></label>
+              <textarea id="q21_fee_details" name="q21_fee_details" class="form-control" rows="2" placeholder="State who demanded fees, amount asked, and circumstances..."></textarea>
+            </div>
+          </div>
+
+          <!-- Question 22 -->
+          <div class="question-block" id="block-q22">
+            <div class="q-header">
+              <span class="q-num">Question 22:</span>
+              <span class="q-text">Have you independently verified the identity of the funding organization using its official contact details? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q22_independently_verified" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q22_independently_verified" value="No">
+                <span class="chip-label">No</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q22_independently_verified" value="Not Yet">
+                <span class="chip-label">Not Yet</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 23 -->
+          <div class="question-block" id="block-q23">
+            <div class="q-header">
+              <span class="q-num">Question 23:</span>
+              <span class="q-text">Do you have any concerns or discrepancies regarding your allocated amount? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q23_discrepancy_concerns" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q23_discrepancy_concerns" value="No">
+                <span class="chip-label">No</span>
+              </label>
+            </div>
+            <!-- Conditional Details for Q23 -->
+            <div class="conditional-box hidden" id="q23_details_box">
+              <label class="sub-label" for="q23_discrepancy_details">If yes, provide details: <span class="required">*</span></label>
+              <textarea id="q23_discrepancy_details" name="q23_discrepancy_details" class="form-control" rows="2" placeholder="Specify any discrepancy or concern..."></textarea>
+            </div>
+          </div>
+
+          <!-- Question 24 -->
+          <div class="question-block" id="block-q24">
+            <div class="q-header">
+              <span class="q-num">Question 24:</span>
+              <span class="q-text">Would you like to submit any additional information or supporting documents? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q24_additional_info_submit" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q24_additional_info_submit" value="No">
+                <span class="chip-label">No</span>
+              </label>
+            </div>
+            <!-- Conditional Details for Q24 -->
+            <div class="conditional-box hidden" id="q24_details_box">
+              <label class="sub-label" for="q24_additional_details">If yes, provide details: <span class="required">*</span></label>
+              <textarea id="q24_additional_details" name="q24_additional_details" class="form-control" rows="2" placeholder="Detail any other information or documents submitted..."></textarea>
+            </div>
+          </div>
+
+          <!-- Question 25 -->
+          <div class="question-block" id="block-q25">
+            <div class="q-header">
+              <span class="q-num">Question 25:</span>
+              <span class="q-text">Have you received official confirmation that your individual allocation is recorded in the funding organization's records? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q25_recorded_in_org_records" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q25_recorded_in_org_records" value="No">
+                <span class="chip-label">No</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q25_recorded_in_org_records" value="Pending Confirmation">
+                <span class="chip-label">Pending Confirmation</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: ADDITIONAL FUND CONFIRMATION QUESTIONS -->
+      <section class="form-card" id="section-4">
+        <div class="card-header section-header">
+          <div class="section-tag">SECTION 4</div>
+          <div>
+            <h3 class="card-title">ADDITIONAL FUND CONFIRMATION QUESTIONS</h3>
+            <p class="card-subtitle">Final funding approval, release schedules, and dispatch reference audit</p>
+          </div>
+        </div>
+
+        <div class="questions-list">
+          <!-- Question 26 -->
+          <div class="question-block" id="block-q26">
+            <div class="q-header">
+              <span class="q-num">Question 26:</span>
+              <span class="q-text">Has the funding organization officially approved your individual fund allocation? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q26_officially_approved" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q26_officially_approved" value="No">
+                <span class="chip-label">No</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q26_officially_approved" value="Pending Confirmation">
+                <span class="chip-label">Pending Confirmation</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 27 -->
+          <div class="form-group" style="margin-top: 1rem;">
+            <label class="question-label">
+              <span class="q-num">Question 27:</span> What is the officially approved amount mentioned in your agreement? <span class="required">*</span>
+            </label>
+            <div class="amount-currency-group">
+              <div class="currency-select-wrapper">
+                <select id="q27_currency" name="q27_currency" class="form-control currency-select">
+                  <option value="INR (₹)" selected>INR (₹)</option>
+                  <option value="USD ($)">USD ($)</option>
+                  <option value="EUR (€)">EUR (€)</option>
+                  <option value="GBP (£)">GBP (£)</option>
+                  <option value="AED">AED</option>
+                  <option value="SGD">SGD</option>
+                </select>
+              </div>
+              <input type="number" id="q27_approved_amount" name="q27_approved_amount" class="form-control amount-input" placeholder="0.00" step="any" min="0" inputmode="decimal" required>
+            </div>
+          </div>
+
+          <!-- Question 28 -->
+          <div class="question-block" id="block-q28">
+            <div class="q-header">
+              <span class="q-num">Question 28:</span>
+              <span class="q-text">Have you received official written confirmation of fund allocation from the funding organization? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q28_written_confirmation" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q28_written_confirmation" value="No">
+                <span class="chip-label">No</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 29 -->
+          <div class="question-block" id="block-q29">
+            <div class="q-header">
+              <span class="q-num">Question 29:</span>
+              <span class="q-text">Has the funding organization officially confirmed the fund release date? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q29_release_date_confirmed" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q29_release_date_confirmed" value="No">
+                <span class="chip-label">No</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q29_release_date_confirmed" value="Date Not Yet Confirmed">
+                <span class="chip-label">Date Not Yet Confirmed</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 30 -->
+          <div class="question-block" id="block-q30">
+            <div class="q-header">
+              <span class="q-num">Question 30:</span>
+              <span class="q-text">Have you received an official fund release order or payment confirmation? <span class="required">*</span></span>
+            </div>
+            <div class="radio-options-row">
+              <label class="radio-chip">
+                <input type="radio" name="q30_payment_order_received" value="Yes" required>
+                <span class="chip-label">Yes</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q30_payment_order_received" value="No">
+                <span class="chip-label">No</span>
+              </label>
+              <label class="radio-chip">
+                <input type="radio" name="q30_payment_order_received" value="Pending">
+                <span class="chip-label">Pending</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 31 -->
+          <div class="form-group" style="margin-top: 1rem;">
+            <label class="question-label" for="q31_release_reference_no">
+              <span class="q-num">Question 31:</span> What is the official reference number of the fund allocation or release confirmation, if available?
+            </label>
+            <input type="text" id="q31_release_reference_no" name="q31_release_reference_no" class="form-control mono" placeholder="e.g. AG/ALLOC/2026/8942-B (Leave blank if not yet issued)">
+          </div>
+        </div>
+      </section>
+
+      <!-- MEMBER DECLARATION & SIGNATURE MODULE -->
+      <section class="form-card declaration-card" id="section-declaration">
+        <div class="card-header">
+          <div class="header-icon-box gold-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="card-title">MEMBER DECLARATION</h3>
+            <p class="card-subtitle">Legal undertaking and digital signature verification</p>
+          </div>
+        </div>
+
+        <div class="declaration-legal-box">
+          <div class="legal-quote-mark">“</div>
+          <p class="declaration-statement">
+            I confirm that the information provided in this questionnaire is accurate to the best of my knowledge. I understand that submitting this questionnaire does not itself guarantee fund approval or release. Final confirmation must be based on official records from the funding organization.
+          </p>
+        </div>
+
+        <div class="declaration-grid">
+          <!-- Member Name -->
+          <div class="form-group">
+            <label class="question-label" for="decl_member_name">
+              Member Full Name: <span class="required">*</span>
+            </label>
+            <input type="text" id="decl_member_name" name="decl_member_name" class="form-control" placeholder="Member name as signed below" required>
+            <button type="button" class="btn-copy-name" id="btn-sync-name" title="Sync with Question 1">Sync with Q1</button>
+          </div>
+
+          <!-- Declaration Date -->
+          <div class="form-group">
+            <label class="question-label" for="decl_date">
+              Date: <span class="required">*</span>
+            </label>
+            <input type="date" id="decl_date" name="decl_date" class="form-control" required>
+          </div>
+        </div>
+
+        <!-- Signature Pad Module -->
+        <div class="signature-module">
+          <div class="sig-header">
+            <label class="question-label">
+              Signature, if required: <span class="required">*</span>
+              <span class="subtext">(Customer must draw signature inside the designated box)</span>
+            </label>
+            <div class="sig-actions no-print">
+              <button type="button" class="btn-sig-tool" id="btn-sig-undo" title="Undo stroke">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>
+                Undo
+              </button>
+              <button type="button" class="btn-sig-tool btn-sig-clear" id="btn-sig-clear" title="Clear and redraw signature">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                Clear
+              </button>
+            </div>
+          </div>
+
+          <div class="canvas-container" id="signature-container">
+            <canvas id="signature-pad"></canvas>
+            <div class="signature-baseline">
+              <span>Sign Above This Line (Customer Signature)</span>
+            </div>
+            <div class="sig-placeholder-hint" id="sig-hint">
+              Draw customer signature here with finger, stylus, or mouse
+            </div>
+          </div>
+
+          <div class="signature-footer">
+            <div class="sig-status-indicator">
+              <span class="sig-dot" id="sig-status-dot"></span>
+              <span id="sig-status-text">Signature required</span>
+            </div>
+            <div class="sig-timestamp" id="sig-timestamp-label">Not signed yet</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ADMINISTRATIVE VERIFICATION STATUS -->
+      <section class="form-card admin-card" id="section-admin">
+        <div class="card-header admin-header">
+          <div class="header-icon-box blue-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </div>
+          <div>
+            <h3 class="card-title">ADMINISTRATIVE VERIFICATION STATUS</h3>
+            <p class="card-subtitle">Official decision and institutional record compliance</p>
+          </div>
+          <div class="admin-seal-badge">OFFICIAL USE ONLY</div>
+        </div>
+
+        <div class="admin-body">
+          <div class="status-options-grid">
+            <label class="status-card-option">
+              <input type="radio" name="admin_verification_status" value="Verification Pending" checked required>
+              <div class="status-card-inner">
+                <div class="status-indicator yellow"></div>
+                <div class="status-text">
+                  <strong>Verification Pending</strong>
+                  <span>Under initial documentary review</span>
+                </div>
+              </div>
+            </label>
+
+            <label class="status-card-option">
+              <input type="radio" name="admin_verification_status" value="Additional Documentation Required">
+              <div class="status-card-inner">
+                <div class="status-indicator orange"></div>
+                <div class="status-text">
+                  <strong>Additional Documentation Required</strong>
+                  <span>Awaiting supporting certificates / bank proof</span>
+                </div>
+              </div>
+            </label>
+
+            <label class="status-card-option">
+              <input type="radio" name="admin_verification_status" value="Allocation Officially Confirmed">
+              <div class="status-card-inner">
+                <div class="status-indicator blue"></div>
+                <div class="status-text">
+                  <strong>Allocation Officially Confirmed</strong>
+                  <span>Fund allocation verified against master grant records</span>
+                </div>
+              </div>
+            </label>
+
+            <label class="status-card-option">
+              <input type="radio" name="admin_verification_status" value="Release Officially Approved">
+              <div class="status-card-inner">
+                <div class="status-indicator teal"></div>
+                <div class="status-text">
+                  <strong>Release Officially Approved</strong>
+                  <span>Signed off for disbursement clearance</span>
+                </div>
+              </div>
+            </label>
+
+            <label class="status-card-option">
+              <input type="radio" name="admin_verification_status" value="Payment Confirmed">
+              <div class="status-card-inner">
+                <div class="status-indicator green"></div>
+                <div class="status-text">
+                  <strong>Payment Confirmed</strong>
+                  <span>Disbursement executed and confirmed</span>
+                </div>
+              </div>
+            </label>
+          </div>
+
+          <div class="admin-signoff-row">
+            <div class="form-group">
+              <label class="question-label" for="admin_officer_name">Verified By (Administrator Name):</label>
+              <input type="text" id="admin_officer_name" name="admin_officer_name" class="form-control" placeholder="e.g. Compliance Officer J. Alexander">
+            </div>
+
+            <div class="form-group">
+              <label class="question-label" for="admin_officer_id">Officer Staff ID:</label>
+              <input type="text" id="admin_officer_id" name="admin_officer_id" class="form-control mono" placeholder="AG-ADM-401">
+            </div>
+
+            <div class="form-group">
+              <label class="question-label" for="admin_verified_date">Verification Date:</label>
+              <input type="date" id="admin_verified_date" name="admin_verified_date" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="question-label" for="admin_official_notes">Administrative Remarks / Observations:</label>
+            <textarea id="admin_official_notes" name="admin_official_notes" class="form-control" rows="2" placeholder="Record verification remarks, database check reference, and compliance audit observations..."></textarea>
+          </div>
+
+          <!-- Official Mandate Advisory Box -->
+          <div class="admin-mandate-box">
+            <div class="mandate-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <circle cx="12" cy="11" r="1"></circle>
+                <line x1="12" y1="7" x2="12" y2="9"></line>
+              </svg>
+            </div>
+            <div class="mandate-content">
+              <strong>Important Statutory Notice:</strong>
+              <p>The administrator must select the final status only after checking authentic official records. Answers submitted by members alone do not establish fund approval or release.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bottom Action Bar (Non-print) -->
+      <section class="form-footer-actions no-print">
+        <div class="footer-btn-wrapper">
+          <button type="button" class="btn btn-outline" id="btn-reset-form">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+              <path d="M3 3v5h5"></path>
+            </svg>
+            Reset Form
+          </button>
+
+          <button type="button" class="btn btn-secondary" id="btn-export-json">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Export JSON
+          </button>
+
+          <button type="submit" class="btn btn-primary btn-submit-large" id="btn-submit-form">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            Submit & Record Verification
+          </button>
+        </div>
+      </section>
+
+      <!-- Print Footer with Official Watermark -->
+      <div class="print-document-footer">
+        <div class="print-footer-inner">
+          <div class="print-stamp-box">
+            <div class="stamp-circle">
+              <span>AADITHAN GROUPS</span>
+              <strong>VERIFIED</strong>
+              <small>COMPLIANCE RECORD</small>
+            </div>
+          </div>
+          <div class="print-meta-text">
+            <p>Aadhithan Groups Member Verification Record &bull; Generated digitally with cryptographic timestamp</p>
+            <p>Confidential &bull; Retain as part of Project Master Audit File &bull; Ref: <span class="print-ref-copy">AG-VRF-2026-0001</span></p>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </main>
+
+  <!-- Mobile Sticky Bottom Floating Action Bar (Exclusively for Mobile Screen Experience) -->
+  <aside class="mobile-sticky-bottom-bar no-print" id="mobile-sticky-bar" aria-label="Mobile Quick Actions">
+    <div class="mobile-bar-inner">
+      <button type="button" class="mobile-bar-btn" id="m-btn-save-draft" title="Save Progress Draft">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+          <polyline points="17 21 17 13 7 13 7 21"></polyline>
+          <polyline points="7 3 7 8 15 8"></polyline>
+        </svg>
+        <span>Save</span>
+      </button>
+
+      <button type="button" class="mobile-bar-btn" id="m-btn-view-records" title="Past Submitted Records">
+        <div class="m-badge-wrapper">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+          </svg>
+          <span class="m-record-counter" id="m-record-count-badge">0</span>
+        </div>
+        <span>Records</span>
+      </button>
+
+      <div class="mobile-progress-widget" id="m-progress-widget" title="Completion Progress">
+        <div class="m-progress-pill-box">
+          <span class="m-progress-val" id="m-progress-text">0%</span>
+        </div>
+        <span class="m-progress-label">Progress</span>
+      </div>
+
+      <button type="button" class="mobile-bar-submit-btn" id="m-btn-submit-quick">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span>Submit</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Records Management Modal -->
+  <div class="modal-backdrop hidden" id="records-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="brand-group">
+          <div class="brand-logo sm">
+            <img src="assets/logo.png" alt="Aadhithan Groups Logo" class="brand-logo-img">
+          </div>
+          <div>
+            <h3>Saved Verification Records</h3>
+            <p>Submissions stored locally in this device browser</p>
+          </div>
+        </div>
+        <button type="button" class="btn-modal-close" id="btn-close-records">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div id="records-empty" class="records-empty-view">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="1.5">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <circle cx="12" cy="14" r="2"></circle>
+          </svg>
+          <p>No submitted records found yet.</p>
+          <span>Submitted member verifications will be logged here for easy review and printing.</span>
+        </div>
+        <div id="records-list" class="records-table-wrapper hidden">
+          <table class="records-table">
+            <thead>
+              <tr>
+                <th>Ref ID</th>
+                <th>Member Name</th>
+                <th>Member ID</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Photo</th>
+                <th>Sign</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="records-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" id="btn-clear-all-records">Clear All Records</button>
+        <button type="button" class="btn btn-secondary" id="btn-close-records-footer">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submission Success Modal -->
+  <div class="modal-backdrop hidden" id="success-modal">
+    <div class="modal-card modal-sm text-center">
+      <div class="success-icon-badge">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+      </div>
+      <h3>Member Verification Recorded!</h3>
+      <p class="success-modal-subtext">The verification questionnaire, captured photo, and customer signature have been successfully recorded.</p>
+      
+      <div class="success-details-card">
+        <div class="succ-row"><span>Ref ID:</span> <strong id="succ-ref-id" class="mono">—</strong></div>
+        <div class="succ-row"><span>Member:</span> <strong id="succ-member-name">—</strong></div>
+        <div class="succ-row"><span>Status:</span> <span class="badge badge-success" id="succ-status">—</span></div>
+      </div>
+
+      <div class="success-modal-actions">
+        <button type="button" class="btn btn-primary" id="btn-print-success">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+          </svg>
+          Print / Save PDF Now
+        </button>
+        <button type="button" class="btn btn-outline" id="btn-new-verification">Start New Verification</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
