@@ -47,6 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnStopCamera = document.getElementById('btn-stop-camera');
   const btnRetakePhoto = document.getElementById('btn-retake-photo');
   const photoFileInput = document.getElementById('photo-file-input');
+  const photoCameraInput = document.getElementById('photo-camera-input');
+  const photoGalleryInput = document.getElementById('photo-gallery-input');
   const photoStatusBadge = document.getElementById('photo-status-badge');
   const photoMetaStatus = document.getElementById('photo-meta-status');
   const photoMetaTime = document.getElementById('photo-meta-time');
@@ -141,12 +143,23 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
 
   async function startCamera() {
-    // Check if getUserMedia is supported
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      showToast('Camera API not available on this browser/protocol. Please use the "Upload Photo File" option.', 'warning');
+    // Detect mobile device or insecure HTTP origin (e.g. accessing via local IP over Wi-Fi)
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || ('ontouchstart' in window && window.innerWidth <= 820);
+    const isSecureContext = window.isSecureContext || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+    const canUseWebcamStream = isSecureContext && navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function' && !isMobile;
+
+    // On mobile devices or non-localhost HTTP, modern browsers disable getUserMedia API for security.
+    // Instead, HTML5 device camera (capture="user") opens the native camera app directly without any errors or SSL needed!
+    if (!canUseWebcamStream) {
+      if (photoCameraInput) {
+        photoCameraInput.click();
+      } else if (photoFileInput) {
+        photoFileInput.click();
+      }
       return;
     }
 
+    // On desktop browsers with secure context / localhost, open live stream
     try {
       if (state.cameraStream) {
         stopCameraTracks();
@@ -179,16 +192,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
       showToast('Live camera ready. Align face and capture.', 'success');
     } catch (err) {
-      console.warn('Camera access error:', err);
-      let msg = 'Could not access camera. ';
-      if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
-        msg += 'Permission was denied. Please allow camera permissions or use "Upload Photo File".';
-      } else if (err.name === 'NotFoundError') {
-        msg += 'No camera device found on this system.';
-      } else {
-        msg += 'Check camera permissions or use "Upload Photo File".';
+      console.warn('Live WebRTC camera error, falling back to device camera:', err);
+      // Fallback seamlessly to native camera without error prompt
+      if (photoCameraInput) {
+        photoCameraInput.click();
+      } else if (photoFileInput) {
+        photoFileInput.click();
       }
-      showToast(msg, 'warning');
     }
   }
 
@@ -334,7 +344,9 @@ document.addEventListener('DOMContentLoaded', () => {
     photoMetaTime.textContent = '—';
     btnRetakePhoto.classList.add('hidden');
     btnStartCamera.classList.remove('hidden');
-    photoFileInput.value = '';
+    if (photoFileInput) photoFileInput.value = '';
+    if (photoCameraInput) photoCameraInput.value = '';
+    if (photoGalleryInput) photoGalleryInput.value = '';
     startCamera();
     updateProgress();
   }
@@ -1086,7 +1098,18 @@ document.addEventListener('DOMContentLoaded', () => {
     btnSwitchCamera.addEventListener('click', toggleCameraFacing);
     btnStopCamera.addEventListener('click', closeCameraUI);
     btnRetakePhoto.addEventListener('click', retakePhoto);
-    photoFileInput.addEventListener('change', handlePhotoFileUpload);
+    if (photoFileInput) photoFileInput.addEventListener('change', handlePhotoFileUpload);
+    if (photoCameraInput) photoCameraInput.addEventListener('change', handlePhotoFileUpload);
+    if (photoGalleryInput) photoGalleryInput.addEventListener('change', handlePhotoFileUpload);
+
+    // Tapping placeholder area directly opens camera
+    if (cameraPlaceholder) {
+      cameraPlaceholder.addEventListener('click', () => {
+        if (!state.photoDataUrl && !state.cameraStream) {
+          startCamera();
+        }
+      });
+    }
 
     // Signature listeners
     btnSigClear.addEventListener('click', clearSignature);
