@@ -15,6 +15,14 @@
       "dest": "/js/$1"
     },
     {
+      "src": "/site.html",
+      "dest": "/site.html"
+    },
+    {
+      "src": "/site",
+      "dest": "/site.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }

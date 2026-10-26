@@ -2,30 +2,472 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>AADHIRAN — Ayurveda, Siddha & Naturopathy Sanctuary | Tiruppur</title>
-  <meta name="description" content="AADHIRAN is Tamil Nadu's premier therapeutic wellness sanctuary in Tiruppur. Authentic Ayurveda, Siddha & Naturopathy treatments with verified practitioners.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0c3321">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+  <title>Under Maintenance | AADHIRAN — Ayurveda, Siddha & Naturopathy Sanctuary</title>
+  <meta name="description" content="AADHIRAN Ayurveda, Siddha & Naturopathy Sanctuary in Tiruppur. Our digital portal is currently undergoing scheduled maintenance. For appointments, call 82202 67077 or WhatsApp us.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="apple-touch-icon" href="assets/logo.png">
-  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    :root {
+      --primary-deep: #0c3321;
+      --primary-green: #154730;
+      --primary-hover: #1b5b3e;
+      --primary-light: #eef6f1;
+      --accent-gold: #c6a246;
+      --accent-gold-light: #fcf8ee;
+      --accent-gold-border: #dfc888;
+      --accent-gold-dark: #967523;
+      --text-dark: #14211a;
+      --text-body: #37463f;
+      --text-muted: #5e6f66;
+      --bg-page: #faf8f5;
+      --bg-card: #ffffff;
+      --border-light: #e8e2d8;
+      --font-main: 'Outfit', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-page);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(198, 162, 70, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(21, 71, 48, 0.06) 0%, transparent 40%);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Top Announcement Bar */
+    .top-bar {
+      background-color: var(--primary-deep);
+      color: #d8e8df;
+      font-size: 0.8rem;
+      border-bottom: 1px solid rgba(198, 162, 70, 0.25);
+      padding: 0.45rem 1rem;
+    }
+
+    .top-bar-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .top-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: inherit;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .top-item.whatsapp {
+      color: #34d399;
+      font-weight: 600;
+    }
+
+    /* Maintenance Content Area */
+    .maintenance-viewport {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.25rem calc(2.5rem + env(safe-area-inset-bottom, 0px));
+    }
+
+    .maintenance-wrapper {
+      width: 100%;
+      max-width: 580px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Luxury Sanctuary Maintenance Card */
+    .maintenance-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-light);
+      border-radius: 24px;
+      box-shadow: 0 16px 40px -10px rgba(12, 51, 33, 0.08), 0 8px 16px -6px rgba(12, 51, 33, 0.04);
+      padding: 2.75rem 2rem 2.25rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .maintenance-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #154730, #c6a246, #967523, #154730);
+      background-size: 300% 100%;
+      animation: goldShimmer 4s ease infinite;
+    }
+
+    @keyframes goldShimmer {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Brand Logo & Golden Rotating Ring */
+    .logo-container {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .emblem-pulse {
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(198, 162, 70, 0.2) 0%, transparent 70%);
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.35; transform: scale(0.96); }
+      50% { opacity: 0.85; transform: scale(1.06); }
+    }
+
+    .emblem-ring {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      border: 2px dashed var(--accent-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      animation: spinHalo 35s linear infinite;
+    }
+
+    @keyframes spinHalo {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .brand-logo-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 16px rgba(12, 51, 33, 0.2);
+      border: 2.5px solid var(--accent-gold);
+      position: absolute;
+      z-index: 2;
+      background: #ffffff;
+    }
+
+    /* Status Badge */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent-gold-light);
+      border: 1px solid var(--accent-gold-border);
+      color: var(--accent-gold-dark);
+      padding: 0.35rem 0.95rem;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 1.15rem;
+    }
+
+    .pulsing-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent-gold);
+      box-shadow: 0 0 0 0 rgba(198, 162, 70, 0.7);
+      animation: pulseRing 1.8s cubic-bezier(0.66, 0, 0, 1) infinite;
+    }
+
+    @keyframes pulseRing {
+      to {
+        box-shadow: 0 0 0 8px rgba(198, 162, 70, 0);
+      }
+    }
+
+    /* Headings */
+    .brand-heading {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      color: var(--primary-deep);
+      line-height: 1.15;
+      margin-bottom: 0.25rem;
+    }
+
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--accent-gold-dark);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 1.15rem;
+    }
+
+    .divider {
+      width: 50px;
+      height: 3px;
+      background: var(--accent-gold);
+      border-radius: 2px;
+      margin: 0 auto 1.35rem;
+    }
+
+    .maintenance-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .maintenance-desc {
+      font-size: 0.92rem;
+      color: var(--text-body);
+      line-height: 1.65;
+      margin-bottom: 1.6rem;
+    }
+
+    /* Live Clinic Advisory Card */
+    .advisory-box {
+      background: var(--primary-light);
+      border: 1px solid #cce4d6;
+      border-left: 4px solid var(--primary-green);
+      border-radius: 12px;
+      padding: 0.95rem 1.1rem;
+      text-align: left;
+      font-size: 0.85rem;
+      color: var(--primary-deep);
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+
+    .advisory-box strong {
+      display: block;
+      color: var(--primary-deep);
+      font-size: 0.88rem;
+      margin-bottom: 0.2rem;
+      font-weight: 700;
+    }
+
+    /* Operational Status Card */
+    .info-card {
+      background: var(--bg-page);
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      padding: 1.15rem 1.25rem;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      font-size: 0.84rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .info-label {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .info-value {
+      font-weight: 700;
+      color: var(--text-dark);
+      text-align: right;
+    }
+
+    .info-value.highlight {
+      color: var(--primary-green);
+    }
+
+    /* Direct Booking CTA Action Group */
+    .action-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 0.85rem 1.25rem;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      min-height: 50px;
+      width: 100%;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-whatsapp {
+      background: linear-gradient(135deg, #059669, #10b981);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
+    }
+
+    .btn-whatsapp:hover {
+      box-shadow: 0 6px 18px rgba(5, 150, 105, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .btn-phone {
+      background: var(--primary-deep);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(12, 51, 33, 0.25);
+    }
+
+    .btn-phone:hover {
+      background: var(--primary-green);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: #ffffff;
+      color: var(--text-body);
+      border-color: var(--border-light);
+    }
+
+    .btn-outline:hover {
+      background: var(--bg-page);
+      border-color: #cbd5e1;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .auto-check-hint {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      margin-top: 0.35rem;
+    }
+
+    /* Footer */
+    .maintenance-footer {
+      text-align: center;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .maintenance-footer strong {
+      color: var(--text-body);
+    }
+
+    .admin-link {
+      display: inline-block;
+      margin-top: 0.65rem;
+      color: #8c9b92;
+      text-decoration: none;
+      font-size: 0.72rem;
+      font-weight: 600;
+      transition: color 0.15s ease;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+    }
+
+    .admin-link:hover {
+      color: var(--primary-green);
+      background: rgba(21, 71, 48, 0.08);
+    }
+
+    /* Mobile Adaptations */
+    @media (max-width: 600px) {
+      .top-bar-container {
+        flex-direction: column;
+        gap: 0.25rem;
+        text-align: center;
+      }
+      .maintenance-card {
+        padding: 2rem 1.25rem 1.75rem;
+        border-radius: 20px;
+      }
+      .brand-heading {
+        font-size: 1.35rem;
+      }
+      .maintenance-title {
+        font-size: 1.1rem;
+      }
+      .maintenance-desc {
+        font-size: 0.86rem;
+      }
+      .info-card {
+        padding: 0.95rem 1rem;
+      }
+      .info-row {
+        font-size: 0.78rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
   <!-- Top Announcement Bar -->
-  <div class="top-bar">
+  <aside class="top-bar" aria-label="Sanctuary Contact Details">
     <div class="top-bar-container">
       <div class="top-info">
         <span class="top-item">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          6:00 AM – 10:00 PM
-        </span>
-        <span class="top-divider">|</span>
-        <span class="top-item">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-          Sri Bhagavathy Complex, 29 C, Tiruppur
+          Flagship Hours: 6:00 AM – 10:00 PM
         </span>
       </div>
       <div class="top-contacts">
@@ -33,583 +475,121 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
           82202 67077
         </a>
-        <span class="top-divider">|</span>
-        <a href="https://wa.me/918220267077" class="top-item whatsapp" target="_blank" rel="noopener">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.63c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.49-.4-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.07s.89 2.4 1.01 2.57c.13.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
-          WhatsApp
+        <span style="opacity: 0.4;">&bull;</span>
+        <a href="https://wa.me/918220267077?text=Hello%20Aadhiran%20Sanctuary%2C%20I%20would%20like%20to%20inquire%20about%20appointments." class="top-item whatsapp" target="_blank" rel="noopener">
+          WhatsApp Direct
         </a>
       </div>
-    </div>
-  </div>
-
-  <!-- Main Header with Only Required Menus -->
-  <header class="main-header">
-    <div class="header-container">
-      <!-- Brand Logo -->
-      <a href="/" class="brand-link">
-        <img src="assets/logo.png" alt="Aadhiran Logo" class="brand-emblem-img">
-        <div class="brand-text-block">
-          <span class="brand-title">AADHIRAN</span>
-          <span class="brand-tagline">AYURVEDA &bull; SIDDHA &bull; NATUROPATHY</span>
-        </div>
-      </a>
-
-      <!-- Streamlined Desktop Navigation -->
-      <nav class="desktop-nav">
-        <a href="#hero" class="nav-link active">Home</a>
-        <a href="#about" class="nav-link">About</a>
-        
-        <!-- Grouped Dropdown for Treatments -->
-        <div class="nav-dropdown">
-          <button class="nav-link" type="button">
-            Treatments ▾
-          </button>
-          <div class="dropdown-menu">
-            <a href="#wings" class="dropdown-item">Men's Wellness Division</a>
-            <a href="#wings" class="dropdown-item">Women's Wellness Division</a>
-            <a href="#wings" class="dropdown-item">Reproductive Health Care</a>
-            <a href="#therapies" class="dropdown-item">All 10 Traditional Therapies</a>
-          </div>
-        </div>
-
-        <a href="#practitioners" class="nav-link">Practitioners</a>
-        <a href="#why-us" class="nav-link">Why Us</a>
-        <a href="#gallery" class="nav-link">Gallery</a>
-        <a href="#contact" class="nav-link">Contact</a>
-      </nav>
-
-      <!-- Header Action Button (Guaranteed Never Cut Off) -->
-      <div class="header-actions">
-        <a href="#book" class="btn-book-nav" data-book-trigger>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-          Book Appointment
-        </a>
-        <button type="button" class="mobile-toggle" id="mobile-toggle" aria-label="Toggle Navigation">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Mobile Slide-out Drawer -->
-  <div class="mobile-drawer-backdrop" id="drawer-backdrop"></div>
-  <aside class="mobile-drawer" id="mobile-drawer">
-    <div class="drawer-header">
-      <div class="brand-text-block">
-        <span class="brand-title">AADHIRAN</span>
-        <span class="brand-tagline">Ayurveda &bull; Siddha</span>
-      </div>
-      <button class="drawer-close" id="drawer-close">&times;</button>
-    </div>
-    <nav class="drawer-nav">
-      <a href="#hero" class="drawer-link">Home</a>
-      <a href="#about" class="drawer-link">About Sanctuary</a>
-      <a href="#wings" class="drawer-link">Dedicated Wings (Men & Women)</a>
-      <a href="#therapies" class="drawer-link">Therapies & Treatments</a>
-      <a href="#practitioners" class="drawer-link">Resident Healers</a>
-      <a href="#why-us" class="drawer-link">Why Choose Us</a>
-      <a href="#gallery" class="drawer-link">Sanctuary Gallery</a>
-      <a href="#contact" class="drawer-link">Location & Contact</a>
-    </nav>
-    <div class="drawer-footer">
-      <a href="#book" class="btn-primary-lg" style="justify-content: center;" data-book-trigger>Book Appointment</a>
-      <a href="https://wa.me/918220267077" class="btn-whatsapp-lg" style="justify-content: center;" target="_blank">WhatsApp Direct</a>
     </div>
   </aside>
 
-  <!-- PROPERLY ALIGNED HERO SECTION -->
-  <section class="hero-section" id="hero">
-    <div class="hero-inner">
-      <!-- Gold Badge -->
-      <div class="gold-badge">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="#c6a246"><path d="M12 2L15 9H22L16.5 13.5L18.5 20.5L12 16L5.5 20.5L7.5 13.5L2 9H9L12 2Z"/></svg>
-        <span>CERTIFIED HEALERS & THERAPISTS &bull; சித்த & ஆயுர்வேத நிபுணர்கள்</span>
-      </div>
-
-      <!-- Main Heading -->
-      <h1 class="hero-main-title">Meet Our Resident Practitioners</h1>
-
-      <!-- Tamil Subtitle -->
-      <p class="hero-tamil-subtitle">மருத்துவ நிபுணரைத் தேர்ந்தெடுத்து சிகிச்சை திட்டங்களை முன்பதிவு செய்யுங்கள்</p>
-
-      <!-- Balanced Description -->
-      <p class="hero-description">
-        Every healing touch at AADHIRAN is delivered by verified practitioners skilled in authentic Marma points, herbal medicated oils, and restorative therapy. Tap any therapist below to explore their specialized therapies and schedule your private sanctuary session.
-      </p>
-
-      <!-- CTA Buttons Group -->
-      <div class="hero-cta-group">
-        <a href="#book" class="btn-primary-lg" data-book-trigger>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path><path d="M12 6v6l4 2"></path></svg>
-          Book Sanctuary Session
-        </a>
-        <a href="https://wa.me/918220267077" class="btn-whatsapp-lg" target="_blank" rel="noopener">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.63c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.49-.4-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.07s.89 2.4 1.01 2.57c.13.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
-          WhatsApp Us
-        </a>
-      </div>
-
-      <!-- Trust Badges 3-Card Row -->
-      <div class="trust-badges-grid">
-        <div class="trust-card">
-          <div class="trust-icon-box">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-          </div>
-          <h4>100% Background-Verified Practitioners</h4>
-        </div>
-        <div class="trust-card">
-          <div class="trust-icon-box">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 0-7 17l7 3 7-3a10 10 0 0 0-7-17z"></path></svg>
-          </div>
-          <h4>Authentic Herbal Oils & Medicated Decoctions</h4>
-        </div>
-        <div class="trust-card">
-          <div class="trust-icon-box">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-          </div>
-          <h4>100% Private Dedicated Chambers for Men & Women</h4>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- RESIDENT PRACTITIONERS SHOWCASE -->
-  <section class="section-wrapper white-bg" id="practitioners">
-    <div class="section-header-center">
-      <span class="section-tag">VERIFIED LINEAGE HEALERS</span>
-      <h2 class="section-title">Our Certified Practitioners</h2>
-      <p class="section-subtitle-ta">பாரம்பரிய ஆயுர்வேத & சித்த சிகிச்சை நிபுணர்கள்</p>
-      <p class="section-desc">Each practitioner is deeply experienced in traditional body anatomy, pulse diagnosis (Naadi), and sacred therapeutic Marma manipulation.</p>
-    </div>
-
-    <div class="practitioners-grid">
-      <!-- Practitioner 1: Karthik Raja -->
-      <div class="practitioner-card">
-        <div class="practitioner-photo-frame">
-          <img src="assets/practitioners/karthik.jpg" alt="Karthik Raja" class="practitioner-img">
-          <div class="practitioner-verified-tag">✓ Verified</div>
-        </div>
-        <div class="practitioner-info">
-          <h3 class="practitioner-name">Karthik Raja</h3>
-          <span class="practitioner-role">Senior Marma & Varma Specialist</span>
-          <p class="practitioner-bio">Specialist in vital Marma pressure points, neuromuscular pain relief, sports vitality, and spinal tension release through authentic Siddha techniques.</p>
-          <button type="button" class="btn-book-practitioner" data-book-trigger data-therapist="Karthik Raja (Senior Marma Specialist)">Book with Karthik</button>
-        </div>
-      </div>
-
-      <!-- Practitioner 2: Priya -->
-      <div class="practitioner-card">
-        <div class="practitioner-photo-frame">
-          <img src="assets/practitioners/priya.jpg" alt="Priya" class="practitioner-img">
-          <div class="practitioner-verified-tag">✓ Verified</div>
-        </div>
-        <div class="practitioner-info">
-          <h3 class="practitioner-name">Priya</h3>
-          <span class="practitioner-role">Women’s Health & Panchakarma</span>
-          <p class="practitioner-bio">Specializing in women's wellness, postnatal rejuvenation, hormonal harmony, herbal oil Sirodhara, and deeply relaxing Ayurvedic Abhyangam therapies.</p>
-          <button type="button" class="btn-book-practitioner" data-book-trigger data-therapist="Priya (Women’s Health Specialist)">Book with Priya</button>
-        </div>
-      </div>
-
-      <!-- Practitioner 3: Anbu -->
-      <div class="practitioner-card">
-        <div class="practitioner-photo-frame">
-          <img src="assets/practitioners/anbu.jpg" alt="Anbu" class="practitioner-img">
-          <div class="practitioner-verified-tag">✓ Verified</div>
-        </div>
-        <div class="practitioner-info">
-          <h3 class="practitioner-name">Anbu</h3>
-          <span class="practitioner-role">Traditional Herbal Decoctions & Udvarthanam</span>
-          <p class="practitioner-bio">Expert in herbal powder massages, detoxification steam baths, body scrub therapies, and traditional herbal formulations for long-lasting stamina and immunity.</p>
-          <button type="button" class="btn-book-practitioner" data-book-trigger data-therapist="Anbu (Udvarthanam Specialist)">Book with Anbu</button>
-        </div>
-      </div>
-
-      <!-- Practitioner 4: Tamil -->
-      <div class="practitioner-card">
-        <div class="practitioner-photo-frame">
-          <img src="assets/practitioners/tamil.jpg" alt="Tamil" class="practitioner-img">
-          <div class="practitioner-verified-tag">✓ Verified</div>
-        </div>
-        <div class="practitioner-info">
-          <h3 class="practitioner-name">Tamil</h3>
-          <span class="practitioner-role">Head & Reflexology Specialist</span>
-          <p class="practitioner-bio">Dedicated therapist for head & eye cooling treatments, foot reflexology for stress alleviation, restorative sleep therapies, and de-tan herbal treatments.</p>
-          <button type="button" class="btn-book-practitioner" data-book-trigger data-therapist="Tamil (Reflexology Specialist)">Book with Tamil</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- DEDICATED SANCTUARY WINGS -->
-  <section class="section-wrapper cream-bg" id="wings">
-    <div class="section-header-center">
-      <span class="section-tag">SPECIALIZED CLINICAL CARE</span>
-      <h2 class="section-title">Dedicated Sanctuary Wings</h2>
-      <p class="section-subtitle-ta">முப்பெரும் நல்வாழ்வுப் பிரிவுகள்</p>
-      <p class="section-desc">Tailored, dignified, and 100% confidential private suites engineered specifically for male and female physiological vitality.</p>
-    </div>
-
-    <div class="wings-grid">
-      <!-- Wing 1: Men's Wellness -->
-      <div class="wing-card">
-        <div class="wing-banner-frame">
-          <img src="https://aadhiran-tup.client.db.shanapps.dev/api/files/pbc_519226400/bbks0zf6duj1o9j/mens_wellness_division_n5lefribzs.jpg" alt="Men's Wellness" class="wing-banner-img">
-        </div>
-        <div class="wing-content">
-          <span class="wing-badge">WING 01</span>
-          <h3 class="wing-title">MEN’S WELLNESS</h3>
-          <p class="wing-subtitle-ta">ஆண்களுக்கான முழுமையான Wellness Care</p>
-          <p class="wing-desc">Focusing on vital energy, sexual stamina, reproductive wellness, sperm vitality, and deep physical decompression from high-stress work lifestyles.</p>
-          <a href="#book" class="btn-wing" data-book-trigger data-service="Men's Wellness Care">Explore Men's Suite &rarr;</a>
-        </div>
-      </div>
-
-      <!-- Wing 2: Women's Wellness -->
-      <div class="wing-card">
-        <div class="wing-banner-frame">
-          <img src="https://aadhiran-tup.client.db.shanapps.dev/api/files/pbc_519226400/r1qxjc38oauybxm/womens_wellness_division_tx4cfhevr0.jpg" alt="Women's Wellness" class="wing-banner-img">
-        </div>
-        <div class="wing-content">
-          <span class="wing-badge">WING 02</span>
-          <h3 class="wing-title">WOMEN’S WELLNESS</h3>
-          <p class="wing-subtitle-ta">பெண்களுக்கான முழுமையான Wellness Care</p>
-          <p class="wing-desc">Holistic harmony focusing on hormonal equilibrium, reproductive health, gentle Ayurvedic detoxification, organic herbal skin wellness, and deep mental tranquility.</p>
-          <a href="#book" class="btn-wing" data-book-trigger data-service="Women's Wellness Care">Explore Women's Suite &rarr;</a>
-        </div>
-      </div>
-
-      <!-- Wing 3: Reproductive Wellness -->
-      <div class="wing-card">
-        <div class="wing-banner-frame">
-          <img src="https://aadhiran-tup.client.db.shanapps.dev/api/files/pbc_519226400/onfp9g7vpzf80w7/reproductive_wellness_nciif9lo6r.jpg" alt="Reproductive Wellness" class="wing-banner-img">
-        </div>
-        <div class="wing-content">
-          <span class="wing-badge">WING 03</span>
-          <h3 class="wing-title">REPRODUCTIVE WELLNESS</h3>
-          <p class="wing-subtitle-ta">இருவருக்குமான சமநிலையான ஆரோக்கியம்</p>
-          <p class="wing-desc">Balancing couples fertility readiness with confidentiality. Addressing male vitality and female reproductive vitality with natural Siddha-Ayurvedic supportive protocols.</p>
-          <a href="#book" class="btn-wing" data-book-trigger data-service="Reproductive Wellness Consultation">Consult Privately &rarr;</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TRADITIONAL THERAPIES SHOWCASE -->
-  <section class="section-wrapper white-bg" id="therapies">
-    <div class="section-header-center">
-      <span class="section-tag">HERBAL & MARMA SESSIONS</span>
-      <h2 class="section-title">Our Authentic Therapies</h2>
-      <p class="section-subtitle-ta">பாரம்பரிய ஆயுர்வேத & சித்த சிகிச்சைகள்</p>
-      <p class="section-desc">Experience 35, 60, and 90-minute therapeutic restorative programs tailored with cold-pressed herbal oils and medicated herbal powders.</p>
-    </div>
-
-    <div class="therapies-grid">
-      <!-- Therapy 1 -->
-      <div class="therapy-card">
-        <div class="therapy-img-box">
-          <img src="https://aadhiran-tup.client.db.shanapps.dev/api/files/pbc_519226400/42svyj4jju2vc16/pdf_gallery_20260927_082927_p1_1_im1_boyaicllxk.jpg" alt="Full Body Relaxation Massage" class="therapy-img">
-          <span class="therapy-time-badge">60 / 90 Mins</span>
-        </div>
-        <div class="therapy-body">
-          <h3 class="therapy-title">Full Body Relaxation Massage</h3>
-          <p class="therapy-desc">Gentle yet deeply penetrative head-to-toe therapy using pure medicated herbal oils to release chronic muscular tension and restore blood flow.</p>
-          <a href="#book" class="btn-book-therapy" data-book-trigger data-service="Full Body Relaxation Massage">Schedule Session</a>
-        </div>
-      </div>
-
-      <!-- Therapy 2 -->
-      <div class="therapy-card">
-        <div class="therapy-img-box">
-          <img src="https://aadhiran-tup.client.db.shanapps.dev/api/files/pbc_519226400/sf3fiv0mcf08tx8/pdf_gallery_20260927_083022_p1_1_im1_e857jyifzt.jpg" alt="Abhyangam" class="therapy-img">
-          <span class="therapy-time-badge">60 Mins</span>
-        </div>
-        <div class="therapy-body">
-          <h3 class="therapy-title">Abhyangam Ayurvedic Massage</h3>
-          <p class="therapy-desc">Classic synchronized Ayurvedic strokes using warm herbal medicated tailams to balance Doshas, nourish body tissues, and delay aging.</p>
-          <a href="#book" class="btn-book-therapy" data-book-trigger data-service="Abhyangam Ayurvedic Massage">Schedule Session</a>
-        </div>
-      </div>
-
-      <!-- Therapy 3 -->
-      <div class="therapy-card">
-        <div class="therapy-img-box">
-          <img src="https://aadhiran-tup.client.db.shanapps.dev/api/files/pbc_519226400/djmyyp4gp099phi/pdf_gallery_20260927_083047_p1_1_im1_d212et43l9.jpg" alt="Sirodhara" class="therapy-img">
-          <span class="therapy-time-badge">45 Mins</span>
-        </div>
-        <div class="therapy-body">
-          <h3 class="therapy-title">Sirodhara Ayurvedic Therapy</h3>
-          <p class="therapy-desc">Continuous rhythmic stream of warm medicated herbal oil poured gently over the third-eye chakra to soothe migraines, anxiety, and sleeplessness.</p>
-          <a href="#book" class="btn-book-therapy" data-book-trigger data-service="Sirodhara Ayurvedic Therapy">Schedule Session</a>
-        </div>
-      </div>
-
-      <!-- Therapy 4 -->
-      <div class="therapy-card">
-        <div class="therapy-img-box">
-          <img src="https://aadhiran-tup.client.db.shanapps.dev/api/files/pbc_519226400/a6td23gs5qquxm9/pdf_gallery_20260927_082959_p1_1_im1_mzr6dwa2eo.jpg" alt="Powder Massage" class="therapy-img">
-          <span class="therapy-time-badge">60 Mins</span>
-        </div>
-        <div class="therapy-body">
-          <h3 class="therapy-title">Powder Massage (Udvarthanam)</h3>
-          <p class="therapy-desc">Exfoliating upward massage with therapeutic medicinal herbal powders that breaks down subcutaneous fat, improves skin luster, and revives lymphatic flow.</p>
-          <a href="#book" class="btn-book-therapy" data-book-trigger data-service="Powder Massage (Udvarthanam)">Schedule Session</a>
-        </div>
-      </div>
-
-      <!-- Therapy 5 -->
-      <div class="therapy-card">
-        <div class="therapy-img-box">
-          <img src="https://aadhiran-tup.client.db.shanapps.dev/api/files/pbc_519226400/tnmngmy4w3g0vrn/pdf_gallery_20260927_083117_p1_1_im1_2fww9pnkft.jpg" alt="Steam Bath" class="therapy-img">
-          <span class="therapy-time-badge">30 Mins</span>
-        </div>
-        <div class="therapy-body">
-          <h3 class="therapy-title">Medicinal Herbal Steam Bath</h3>
-          <p class="therapy-desc">Aromatic chamber infused with decoctions of sacred herbs to open pores, purge deep toxins, soften stiff joints, and promote profound lightness.</p>
-          <a href="#book" class="btn-book-therapy" data-book-trigger data-service="Medicinal Herbal Steam Bath">Schedule Session</a>
-        </div>
-      </div>
-
-      <!-- Therapy 6 -->
-      <div class="therapy-card">
-        <div class="therapy-img-box">
-          <img src="https://aadhiran-tup.client.db.shanapps.dev/api/files/pbc_519226400/1gb9rjmy4j7lchs/pdf_gallery_20260927_083139_p1_1_im1_8g19cy51o0.jpg" alt="Reflexology" class="therapy-img">
-          <span class="therapy-time-badge">45 Mins</span>
-        </div>
-        <div class="therapy-body">
-          <h3 class="therapy-title">Reflexology & Marma Points</h3>
-          <p class="therapy-desc">Targeted therapeutic pressure applied to 7,200 plantar and hand nerve endings to harmonize internal organ function and discharge somatic stress.</p>
-          <a href="#book" class="btn-book-therapy" data-book-trigger data-service="Reflexology & Marma Points">Schedule Session</a>
-        </div>
-      </div>
-
-      <!-- Therapy 7 -->
-      <div class="therapy-card">
-        <div class="therapy-img-box">
-          <img src="https://aadhiran-tup.client.db.shanapps.dev/api/files/pbc_519226400/c0asezx2bwdshkj/pdf_gallery_20260927_083209_p1_1_im1_w4oohkc01e.jpg" alt="Full Body Scrub" class="therapy-img">
-          <span class="therapy-time-badge">45 Mins</span>
-        </div>
-        <div class="therapy-body">
-          <h3 class="therapy-title">Full Body Natural Scrub</h3>
-          <p class="therapy-desc">Pure botanical formulation with botanical oils and wild turmeric to remove dead skin cells, clear pores, and illuminate natural skin luster.</p>
-          <a href="#book" class="btn-book-therapy" data-book-trigger data-service="Full Body Natural Scrub">Schedule Session</a>
-        </div>
-      </div>
-
-      <!-- Therapy 8 -->
-      <div class="therapy-card">
-        <div class="therapy-img-box">
-          <img src="https://aadhiran-tup.client.db.shanapps.dev/api/files/pbc_519226400/duvb3cnb7ohzo5l/pdf_gallery_20260927_083233_p1_1_im1_z4u4mljsrw.jpg" alt="Mud Bath" class="therapy-img">
-          <span class="therapy-time-badge">60 Mins</span>
-        </div>
-        <div class="therapy-body">
-          <h3 class="therapy-title">Naturopathy Mud Bath Therapy</h3>
-          <p class="therapy-desc">Mineral-rich medicinal clay pack that cools systemic inflammation, relieves skin allergies, balances body temperature, and detoxifies tissue.</p>
-          <a href="#book" class="btn-book-therapy" data-book-trigger data-service="Naturopathy Mud Bath Therapy">Schedule Session</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHY CHOOSE AADHIRAN (5 PILLARS) -->
-  <section class="section-wrapper cream-bg" id="why-us">
-    <div class="section-header-center">
-      <span class="section-tag">UNCOMPROMISING EXCELLENCE</span>
-      <h2 class="section-title">Why AADHIRAN?</h2>
-      <p class="section-subtitle-ta">இயற்கை வழி நல்வாழ்வுக்கான 5 முக்கிய நன்மைகள்</p>
-      <p class="section-desc">Experience healing founded upon reverence, ancient science, unadulterated herbs, and deep human respect.</p>
-    </div>
-
-    <div class="pillars-grid">
-      <div class="pillar-card">
-        <div class="pillar-num">01</div>
-        <h3 class="pillar-title">Natural Holistic Roots</h3>
-        <p class="pillar-desc">True classical Ayurveda, Siddha, and Naturopathy without chemical additives or synthetic treatments.</p>
-      </div>
-
-      <div class="pillar-card">
-        <div class="pillar-num">02</div>
-        <h3 class="pillar-title">Personalized Formulations</h3>
-        <p class="pillar-desc">Customized herbal tailams and pressure techniques matched to your unique Dosha body constitution.</p>
-      </div>
-
-      <div class="pillar-card">
-        <div class="pillar-num">03</div>
-        <h3 class="pillar-title">Segregated Private Wings</h3>
-        <p class="pillar-desc">Dedicated wings with certified male and female therapists for uninterrupted peace and dignity.</p>
-      </div>
-
-      <div class="pillar-card">
-        <div class="pillar-num">04</div>
-        <h3 class="pillar-title">Reproductive Focus</h3>
-        <p class="pillar-desc">Destigmatized, respectful environment addressing men's and women's reproductive wellness equally.</p>
-      </div>
-
-      <div class="pillar-card">
-        <div class="pillar-num">05</div>
-        <h3 class="pillar-title">100% Confidentiality</h3>
-        <p class="pillar-desc">Private appointment scheduling, discreet consultation, and serene sound-isolated sanctuary rooms.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SANCTUARY LOCATION & APPOINTMENTS -->
-  <section class="section-wrapper white-bg" id="contact">
-    <div class="sanctuary-details-box">
-      <div class="sanctuary-info">
-        <h3>AADHIRAN SANCTUARY</h3>
-        <div class="tagline">Tiruppur Flagship Center</div>
+  <div class="maintenance-viewport">
+    <div class="maintenance-wrapper">
+      <main class="maintenance-card" role="main">
         
-        <div class="loc-item">
-          <span class="loc-icon">📍</span>
-          <div>
-            <strong>Sri Bhagavathy Complex</strong><br>
-            29 C, Tiruppur, Tamil Nadu 641602
-          </div>
+        <!-- Sanctuary Brand Emblem -->
+        <div class="logo-container">
+          <div class="emblem-pulse"></div>
+          <div class="emblem-ring"></div>
+          <img src="assets/logo.png" alt="Aadhiran Sanctuary Emblem" class="brand-logo-img">
         </div>
 
-        <div class="loc-item">
-          <span class="loc-icon">🕕</span>
-          <div>
-            <strong>Sanctuary Operating Hours</strong><br>
-            Monday – Sunday: 6:00 AM – 10:00 PM
-          </div>
+        <!-- Maintenance Status Badge -->
+        <div>
+          <span class="status-badge">
+            <span class="pulsing-dot"></span>
+            Scheduled Maintenance in Progress
+          </span>
         </div>
 
-        <div class="loc-item">
-          <span class="loc-icon">📞</span>
-          <div>
-            <strong>Direct Consultation Hotline</strong><br>
-            82202 67077
-          </div>
+        <!-- Brand Titles -->
+        <h1 class="brand-heading">AADHIRAN</h1>
+        <p class="brand-sub">Ayurveda &bull; Siddha &bull; Naturopathy</p>
+        
+        <div class="divider"></div>
+
+        <h2 class="maintenance-title">Sanctuary Portal Under Maintenance</h2>
+        
+        <p class="maintenance-desc">
+          We are currently performing scheduled enhancements and service catalog optimizations to bring you an elevated digital wellness experience. Our online portal will be restored shortly.
+        </p>
+
+        <!-- In-Person Clinic Advisory -->
+        <div class="advisory-box">
+          <strong>Flagship Sanctuary Treatments Are Active</strong>
+          Our physical therapy suites, Ayurvedic consultations, and healing treatments are operating normally at Sri Bhagavathy Complex, Tiruppur. You can book directly below:
         </div>
 
-        <div class="sanctuary-actions">
-          <a href="https://maps.google.com/?q=Sri+Bhagavathy+Complex+Tiruppur" class="btn-map" target="_blank" rel="noopener">
-            Open in Google Maps ↗
+        <!-- Direct Contact CTAs -->
+        <div class="action-group">
+          <a href="https://wa.me/918220267077?text=Hello%20Aadhiran%20Sanctuary%2C%20I%20would%20like%20to%20book%20an%20appointment." class="btn btn-whatsapp" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.63c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.49-.4-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.07s.89 2.4 1.01 2.57c.13.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/></svg>
+            Book via WhatsApp (82202 67077)
           </a>
-          <a href="tel:8220267077" class="btn-book-nav">Call Sanctuary Direct</a>
-        </div>
-      </div>
 
-      <div class="map-embed-wrapper">
-        <iframe title="Aadhiran Location Map" src="https://maps.google.com/maps?q=Sri%20Bhagavathy%20Complex,%20Tiruppur&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy"></iframe>
-      </div>
-    </div>
-  </section>
+          <a href="tel:8220267077" class="btn btn-phone">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            Call Sanctuary (82202 67077)
+          </a>
 
-  <!-- BOOKING MODAL -->
-  <div class="modal-backdrop" id="booking-modal">
-    <div class="modal-window">
-      <div class="modal-header-bar">
-        <h3>Book Sanctuary Appointment</h3>
-        <button type="button" class="btn-modal-close" id="btn-close-modal">&times;</button>
-      </div>
-      <form class="modal-body" id="booking-form">
-        <div class="form-group">
-          <label class="form-label" for="book-name">Your Full Name *</label>
-          <input type="text" id="book-name" class="form-input" placeholder="e.g. Ramesh Kumar" required>
+          <button type="button" class="btn btn-outline" onclick="location.reload();">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+            Check Portal Status
+          </button>
         </div>
 
-        <div class="form-group">
-          <label class="form-label" for="book-phone">Mobile Number (WhatsApp Preferred) *</label>
-          <input type="tel" id="book-phone" class="form-input" placeholder="+91 98765 43210" required>
+        <!-- Automatic Status Check Counter -->
+        <div class="auto-check-hint">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span>Auto-refreshing in <strong id="countdown-timer">30</strong>s</span>
         </div>
 
-        <div class="form-group">
-          <label class="form-label" for="booking-service">Desired Therapy / Treatment *</label>
-          <select id="booking-service" class="form-select">
-            <option value="Full Body Relaxation Massage">Full Body Relaxation Massage (60/90 Mins)</option>
-            <option value="Abhyangam Ayurvedic Massage">Abhyangam Ayurvedic Massage (60 Mins)</option>
-            <option value="Sirodhara Ayurvedic Therapy">Sirodhara Ayurvedic Therapy (45 Mins)</option>
-            <option value="Powder Massage (Udvarthanam)">Powder Massage (Udvarthanam) (60 Mins)</option>
-            <option value="Medicinal Herbal Steam Bath">Medicinal Herbal Steam Bath (30 Mins)</option>
-            <option value="Reflexology & Marma Points">Reflexology & Marma Points (45 Mins)</option>
-            <option value="Men's Wellness Care">Men's Wellness Care</option>
-            <option value="Women's Wellness Care">Women's Wellness Care</option>
-            <option value="Reproductive Wellness Consultation">Reproductive Wellness Consultation</option>
-          </select>
+        <!-- Sanctuary Info Breakdown -->
+        <div class="info-card" style="margin-top: 1.5rem; margin-bottom: 0;">
+          <div class="info-row">
+            <span class="info-label">Sanctuary Address:</span>
+            <span class="info-value">Sri Bhagavathy Complex, 29 C, Tiruppur</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Daily Clinic Hours:</span>
+            <span class="info-value highlight">6:00 AM – 10:00 PM</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Inquiry Email:</span>
+            <span class="info-value">aadhiranrelax@gmail.com</span>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label class="form-label" for="booking-therapist">Preferred Healer / Practitioner</label>
-          <select id="booking-therapist" class="form-select">
-            <option value="Any Available Senior Practitioner">Any Available Senior Practitioner</option>
-            <option value="Karthik Raja (Senior Marma Specialist)">Karthik Raja (Senior Marma Specialist)</option>
-            <option value="Priya (Women’s Health Specialist)">Priya (Women’s Health Specialist)</option>
-            <option value="Anbu (Udvarthanam Specialist)">Anbu (Udvarthanam Specialist)</option>
-            <option value="Tamil (Reflexology Specialist)">Tamil (Reflexology Specialist)</option>
-          </select>
-        </div>
+      </main>
 
-        <div class="form-group">
-          <label class="form-label" for="book-date">Preferred Date</label>
-          <input type="date" id="book-date" class="form-input">
+      <!-- Sanctuary Footer -->
+      <footer class="maintenance-footer">
+        <p>&copy; 2026 <strong>AADHIRAN</strong>. All rights reserved.</p>
+        <p>Authentic Traditional Wellness &bull; Ayurveda &bull; Siddha &bull; Naturopathy</p>
+        <div>
+          <a href="site.html" class="admin-link" title="Preview Sanctuary Site">
+            &bull; Preview Sanctuary Site &bull;
+          </a>
         </div>
-
-        <div class="form-group">
-          <label class="form-label" for="book-notes">Special Concerns / Health History (Optional)</label>
-          <textarea id="book-notes" class="form-textarea" rows="2" placeholder="Mention body stiffness, stress level, sleep issues, or specific focus areas..."></textarea>
-        </div>
-
-        <button type="submit" class="btn-submit-booking">
-          Confirm & Send via WhatsApp Direct &rarr;
-        </button>
-      </form>
+      </footer>
     </div>
   </div>
 
-  <!-- SITE FOOTER -->
-  <footer class="site-footer">
-    <div class="footer-container">
-      <div class="footer-col">
-        <h4>AADHIRAN</h4>
-        <p class="brand-tagline" style="color: var(--accent-gold); margin-bottom: 0.75rem;">Ayurveda &bull; Siddha &bull; Naturopathy</p>
-        <p class="footer-desc">
-          Natural Care &bull; Healthy Life &bull; Happier You. Dedicated sanctuary providing personalized holistic wellness, traditional Ayurvedic & Siddha therapies, and confidential Men's & Women's reproductive vitality.
-        </p>
-      </div>
+  <script>
+    // 30-Second Automatic Refresh Countdown
+    let timeLeft = 30;
+    const timerEl = document.getElementById('countdown-timer');
 
-      <div class="footer-col">
-        <h4>Quick Links</h4>
-        <ul class="footer-links">
-          <li><a href="#hero">Sanctuary Home</a></li>
-          <li><a href="#practitioners">Resident Healers</a></li>
-          <li><a href="#wings">Men's Suite</a></li>
-          <li><a href="#wings">Women's Suite</a></li>
-          <li><a href="#therapies">Therapy Menu</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Flagship Hours</h4>
-        <ul class="footer-links">
-          <li>Monday – Sunday</li>
-          <li>6:00 AM – 10:00 PM</li>
-          <li><a href="tel:8220267077">Hotline: 82202 67077</a></li>
-          <li><a href="mailto:aadhiranrelax@gmail.com">aadhiranrelax@gmail.com</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Sanctuary Address</h4>
-        <p class="footer-desc">
-          Sri Bhagavathy Complex, 29 C,<br>
-          Tiruppur, Tamil Nadu 641602.<br>
-          <a href="https://maps.google.com/?q=Sri+Bhagavathy+Complex+Tiruppur" target="_blank" style="color: var(--accent-gold); font-weight: 600; text-decoration: none;">View on Google Maps ↗</a>
-        </p>
-      </div>
-    </div>
-
-    <div class="footer-disclaimer-box">
-      <strong>Important Medical Notice:</strong> Therapies provided at AADHIRAN are formulated for relaxation, rejuvenation, and natural wellness purposes based on traditional Ayurveda, Siddha, and Naturopathy principles. For medical emergencies or acute pathology, please consult a hospital physician.
-    </div>
-
-    <div class="footer-bottom">
-      &copy; 2026 AADHIRAN Sanctuary. All rights reserved. &bull; Authentic Traditional Wellness in Tiruppur.
-    </div>
-  </footer>
-
-  <script src="js/app.js"></script>
+    setInterval(() => {
+      timeLeft--;
+      if (timerEl) timerEl.textContent = timeLeft;
+      if (timeLeft <= 0) {
+        location.reload();
+      }
+    }, 1000);
+  </script>
 </body>
 </html>
